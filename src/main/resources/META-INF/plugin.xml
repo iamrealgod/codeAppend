@@ -15,9 +15,9 @@
   <p>
     v1.0.0
     <ul>
-    <li>New: 支持追加生成lombok风格的mybatis-plus相关代码</li>
-    <li>New: 支持追加新字段(append)和全量覆盖(override)两种方式</li>
-    <li>New: 支持除entity之外的其他文件不生成</li>
+    <li>New: Support to append about Mybatis-plus codes by lombok style. </li>
+    <li>New: Support Append/Override two ways.</li>
+    <li>New: Support only override entity dir</li>
     </ul>
   </p>
     ]]>
