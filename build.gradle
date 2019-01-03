@@ -13,7 +13,7 @@ apply plugin: 'java'
 
 intellij {
     version 'IC-2017.1' //IntelliJ IDEA 2016.3 dependency; for a full list of IntelliJ IDEA releases please see https://www.jetbrains.com/intellij-repository/releases
-    pluginName 'codeGenerate'
+    pluginName 'codeAppend'
     updateSinceUntilBuild false
 }
 
