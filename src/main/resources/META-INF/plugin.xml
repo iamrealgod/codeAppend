@@ -1,0 +1,46 @@
+<idea-plugin>
+  <id>codeAppend</id>
+  <name>codeAppend</name>
+  <version>1.0.0</version>
+  <vendor email="IamRealGod@163.com">IamRealGod</vendor>
+
+  <description><![CDATA[
+      <br>
+      input sql code, column if not exists,append field to [entity\mapper] file.<br>
+      input sql code, output [entity\mapper\dao\service] java file.<br>
+      <a href='https://github.com/laoziyaonitian/codeAppend'>openSource and Docs</a>
+    ]]></description>
+
+  <change-notes><![CDATA[
+  <p>
+    v1.0.0
+    <ul>
+    <li>New: 支持追加生成lombok风格的mybatis-plus相关代码</li>
+    <li>New: 支持追加新字段(append)和全量覆盖(override)两种方式</li>
+    <li>New: 支持除entity之外的其他文件不生成</li>
+    </ul>
+  </p>
+    ]]>
+  </change-notes>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="145.0"/>
+
+  <!-- please see http://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <!-- uncomment to enable plugin in all products
+  <depends>com.intellij.modules.lang</depends>
+  -->
+
+  <extensions defaultExtensionNs="com.intellij">
+    <!-- Add your extensions here -->
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+    <action id="codeAppend" class="org.codeg.intellij.MainAction" text="Code Append">
+      <add-to-group group-id="FileMenu" anchor="last"/>
+    </action>
+  </actions>
+
+</idea-plugin>

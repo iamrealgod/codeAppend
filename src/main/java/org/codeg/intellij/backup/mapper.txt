@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//ibatis.apache.org//DTD Mapper 3.0//EN"
+        "http://ibatis.apache.org/dtd/ibatis-3-mapper.dtd">
+
+<!-- Auto created by codeg plugin -->
+<mapper namespace="{daoPackage}.{className}Dao">
+
+    <resultMap id="{className}RM" type="{entityPackage}.{className}">
+        {resultFields}
+    </resultMap>
+
+    <!-- 用于select查询公用抽取的列 -->
+    <sql id="columns">
+         {columns}
+	</sql>
+
+</mapper>
+
+
+<result property="{property}" column="{column}"/>
+
+

@@ -1,0 +1,22 @@
+package ${entityPackage};
+
+import com.baomidou.mybatisplus.annotations.TableField;
+import com.baomidou.mybatisplus.annotations.TableId;
+import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+import lombok.Data;
+
+import java.util.Date;
+
+@Data
+@TableName("${tableName}")
+public class ${className} {
+    ${fields}
+
+}
+
+	@TableId(value = "id", type = IdType.AUTO)
+    private Long id;    //主键
+
+    @TableField("${column}")
+    private ${propertyType} ${property};    //${comment}

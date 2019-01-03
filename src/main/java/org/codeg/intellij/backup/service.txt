@@ -1,0 +1,36 @@
+package {servicePackage};
+
+import com.baomidou.mybatisplus.service.IService;
+import {entityPackage}.{className};
+
+/**
+ *  Auto created by codeg plugin
+ */
+public interface {className}Service extends IService<{className}> {
+
+}
+
+
+
+
+package {servicePackage}.impl;
+
+import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import {entityPackage}.{className};
+import {daoPackage}.{className}Dao;
+import {servicePackage}.{className}Service;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+
+/**
+ * Auto created by codeg plugin
+ */
+@Slf4j
+@Service
+public class {className}ServiceImpl extends ServiceImpl<{className}Dao, {className}> implements {className}Service {
+
+    // use "baseMapper" to call jdbc
+    // example: baseMapper.insert(entity);
+    // example: baseMapper.selectByPage(params);
+
+}

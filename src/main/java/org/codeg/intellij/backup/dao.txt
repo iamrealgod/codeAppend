@@ -1,0 +1,11 @@
+package {daoPackage};
+
+import com.baomidou.mybatisplus.mapper.BaseMapper;
+import {entityPackage}.{className};
+
+/**
+ * Auto created by codeg plugin
+ */
+public interface {className}Dao extends BaseMapper<{className}> {
+
+}
