@@ -1,4 +1,15 @@
-# codeAppend - 代码追加工具
+# codeAppend - idea代码追加插件
+
+## Install   
+- Using IDE built-in plugin system on Windows:
+  - <kbd>File</kbd> > <kbd>Settings</kbd> > <kbd>Plugins</kbd> > <kbd>Browse repositories...</kbd> > <kbd>Search for "codeAppend"</kbd> > <kbd>Install Plugin</kbd>
+- Using IDE built-in plugin system on MacOs:
+  - <kbd>Preferences</kbd> > <kbd>Settings</kbd> > <kbd>Plugins</kbd> > <kbd>Browse repositories...</kbd> > <kbd>Search for "codeAppend"</kbd> > <kbd>Install Plugin</kbd>
+- Manually:
+  - Download the [latest release](https://github.com/laoziyaonitian/codeAppend/releases/latest) and install it manually using <kbd>Preferences</kbd> > <kbd>Plugins</kbd> > <kbd>Install plugin from disk...</kbd>
+  - From official jetbrains store from [download](https://plugins.jetbrains.com/plugin/11501-codeappend)
+  
+Restart IDE.
 
 ### 功能清单
 - [x] 支持追加不存在的sql字段代码（entity,mapper）
