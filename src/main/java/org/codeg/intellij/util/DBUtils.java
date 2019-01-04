@@ -7,7 +7,7 @@ import org.codeg.intellij.entity.ClassEntity;
 import java.util.List;
 
 /**
- *
+ * 数据库数据处理
  * @author liufei
  * @date 2018/12/28 14:47
  */
@@ -23,7 +23,7 @@ public class DBUtils {
         for (int i = 1; i < split.length; i++) {
             split[i] = String.valueOf(split[i].charAt(0)).toUpperCase() + split[i].substring(1);
         }
-        return org.apache.commons.lang.StringUtils.join(split);
+        return StringUtils.join(split);
     }
 
     /**
