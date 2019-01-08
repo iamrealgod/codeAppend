@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>codeAppend</id>
   <name>codeAppend</name>
-  <version>1.0.0</version>
+  <version>1.0.1</version>
   <vendor email="IamRealGod@163.com">IamRealGod</vendor>
 
   <description><![CDATA[
@@ -15,9 +15,10 @@
   <p>
     v1.0.0
     <ul>
-    <li>New: Support to append about Mybatis-plus codes by lombok style. </li>
-    <li>New: Support Append/Override two ways.</li>
-    <li>New: Support only override entity dir</li>
+    <li>New: Add setting config dialog. </li>
+    <li>New: Directory add default value.</li>
+    <li>New: Table and field prefix handle.</li>
+    <li>New: Bug fix.</li>
     </ul>
   </p>
     ]]>
