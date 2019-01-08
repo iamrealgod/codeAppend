@@ -35,12 +35,12 @@ public class Cache {
         if (Objects.isNull(cache)) {
             cache = new Cache();
             cache.setServicePath(PropertiesComponent.getInstance().getValue("servicePath", StringUtils.EMPTY));
-            cache.setServicePath(PropertiesComponent.getInstance().getValue("servicePackage"));
+            cache.setServicePackage(PropertiesComponent.getInstance().getValue("servicePackage"));
             cache.setDaoPath(PropertiesComponent.getInstance().getValue("daoPath", StringUtils.EMPTY));
-            cache.setDaoPath(PropertiesComponent.getInstance().getValue("daoPackage"));
+            cache.setDaoPackage(PropertiesComponent.getInstance().getValue("daoPackage"));
             cache.setEntityPath(PropertiesComponent.getInstance().getValue("entityPath", StringUtils.EMPTY));
-            cache.setEntityPath(PropertiesComponent.getInstance().getValue("entityPackage"));
-            cache.setEntityPath(PropertiesComponent.getInstance().getValue("mapperPath", StringUtils.EMPTY));
+            cache.setEntityPackage(PropertiesComponent.getInstance().getValue("entityPackage"));
+            cache.setMapperPath(PropertiesComponent.getInstance().getValue("mapperPath", StringUtils.EMPTY));
         }
         return cache;
     }

@@ -20,7 +20,7 @@ public class MainAction extends AnAction implements DumbAware{
         Project project = e.getData(PlatformDataKeys.PROJECT);
         CodeDialog jsonD = new CodeDialog(project);
         jsonD.setProject(project);
-        jsonD.setSize(600, 400);
+        jsonD.setSize(600, 600);
         jsonD.setLocationRelativeTo(null);
         jsonD.setVisible(true);
     }

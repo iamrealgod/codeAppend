@@ -2,6 +2,7 @@ package org.codeg.intellij.util;
 
 import org.codeg.intellij.config.Cache;
 import org.codeg.intellij.config.Constants;
+import org.codeg.intellij.config.Enums.PrefixType;
 
 import java.util.Objects;
 
@@ -34,6 +35,24 @@ public class StringUtils extends org.apache.commons.lang.StringUtils{
             return "/";
         }
         return "\\";
+    }
+
+    /**
+     * 处理前缀（表名/字段）
+     * @param value
+     * @return
+     */
+    public static String handlePrefix(String value, String prefixType, String prefix) {
+        if (prefixType.equals(PrefixType.DEL.name())) {
+            if (value.contains(Constants.UNDER_LINE)) {
+                value = value.substring(value.indexOf(Constants.UNDER_LINE) + 1);
+            }
+        } else if (prefixType.equals(PrefixType.OTHER.name())) {
+            if (!value.equals(prefix) && value.startsWith(prefix)) {
+                value = value.replaceFirst(prefix, StringUtils.EMPTY);
+            }
+        }
+        return value;
     }
 
     public static String getEntityFilePath(String path, String className) {

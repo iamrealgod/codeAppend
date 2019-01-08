@@ -9,7 +9,7 @@ import java.util.regex.Pattern;
  */
 public class Constants {
     public final static Pattern TABLE_REGEX = Pattern.compile("CREATE TABLE `(.*?)` \\((.*?) PRIMARY");
-    public final static Pattern FIELD_REGEX = Pattern.compile("`(.+?)` (.+?) .*? ('(.*?)')?,");
+    public final static Pattern FIELD_REGEX = Pattern.compile("`(.+?)` (.+?) .*?('(.*?)')?,");
     public final static Pattern APPEND_ENTITY_FIELD_REGEX = Pattern.compile("private .*? (.*?;.*)");
     public final static Pattern APPEND_MAPPER_RESULT_REGEX = Pattern.compile("<resultMap [\\s\\S]*?</resultMap>");
     public final static Pattern APPEND_MAPPER_RESULT_REGEX2 = Pattern.compile("<result .*? .*?(=\".*?\"/>)");
@@ -53,7 +53,7 @@ public class Constants {
             + "public class {className} {\n" + "{fields}\n" + "\n" + "}";
 
     public final static String entityFieldIdStr = "\t@TableId(value = \"id\", type = IdType.AUTO)\n"
-            + "\tprivate Long id;\t//主键\n";
+            + "\tprivate Long id;\t// PRIMARY KEY\n";
 
     public final static String entityFieldStr = "\t@TableField(\"{column}\")\n"
             + "\tprivate {propertyType} {property};\t//{comment}\n";

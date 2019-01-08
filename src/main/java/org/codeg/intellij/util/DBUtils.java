@@ -1,8 +1,9 @@
 package org.codeg.intellij.util;
 
+import org.codeg.intellij.config.Config;
 import org.codeg.intellij.config.Constants;
-import org.codeg.intellij.entity.FieldEntity;
 import org.codeg.intellij.entity.ClassEntity;
+import org.codeg.intellij.entity.FieldEntity;
 
 import java.util.List;
 
@@ -14,11 +15,26 @@ import java.util.List;
 public class DBUtils {
 
     /**
+     * 数据库表名转属性
+     * @param tableName
+     * @return
+     */
+    public static String toClassName(String tableName) {
+        final String[] split = tableName.split(Constants.UNDER_LINE);
+        for (int i = 0; i < split.length; i++) {
+            split[i] = String.valueOf(split[i].charAt(0)).toUpperCase() + split[i].substring(1);
+        }
+        return StringUtils.join(split);
+    }
+    /**
      * 数据库字段转属性
      * @param column
      * @return
      */
     public static String toProperty(String column) {
+        if (column.startsWith(Constants.UNDER_LINE)) {
+            column = column.replaceFirst(Constants.UNDER_LINE, StringUtils.EMPTY);
+        }
         final String[] split = column.split(Constants.UNDER_LINE);
         for (int i = 1; i < split.length; i++) {
             split[i] = String.valueOf(split[i].charAt(0)).toUpperCase() + split[i].substring(1);
@@ -67,11 +83,8 @@ public class DBUtils {
     public static ClassEntity getClassEntity(String tableName) {
         ClassEntity entity = new ClassEntity();
         entity.setTableName(tableName);
-        entity.setClassName(tableName);
-        if (tableName.contains(Constants.UNDER_LINE)) {
-            tableName = tableName.substring(tableName.indexOf(Constants.UNDER_LINE));
-            entity.setClassName(DBUtils.toProperty(tableName));
-        }
+        tableName = StringUtils.handlePrefix(tableName,Config.getInstant().getTbPrefixType(),Config.getInstant().getTbPrefix());
+        entity.setClassName(DBUtils.toClassName(tableName));
         return entity;
     }
 

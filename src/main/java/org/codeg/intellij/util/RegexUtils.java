@@ -1,7 +1,8 @@
 package org.codeg.intellij.util;
 
-import org.codeg.intellij.entity.FieldEntity;
+import org.codeg.intellij.config.Config;
 import org.codeg.intellij.config.Constants;
+import org.codeg.intellij.entity.FieldEntity;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -47,8 +48,11 @@ public class RegexUtils {
         int cutOff = 0;
         while (matcher.find() && cutOff < Constants.MAX_MATCHER) {
             FieldEntity param = new FieldEntity();
-            param.setColumn(matcher.group(1));
-            param.setProperty(DBUtils.toProperty(param.getColumn()));
+            String column = matcher.group(1);
+            param.setColumn(column);
+            // 字段前缀处理
+            column = StringUtils.handlePrefix(column, Config.getInstant().getFdPrefixType(),Config.getInstant().getFdPrefix());
+            param.setProperty(DBUtils.toProperty(column));
             param.setColumnType(matcher.group(2));
             param.setPropertyType(DBUtils.toPropertyType(param.getColumnType()));
             if (matcher.groupCount() >= 4) {

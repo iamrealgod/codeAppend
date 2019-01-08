@@ -1,14 +1,5 @@
 package org.codeg.intellij.ui;
 
-import org.codeg.intellij.builder.MapperBuilder;
-import org.codeg.intellij.config.Cache;
-import org.codeg.intellij.entity.FieldEntity;
-import org.codeg.intellij.util.RegexUtils;
-import org.codeg.intellij.builder.DaoBuilder;
-import org.codeg.intellij.builder.EntityBuilder;
-import org.codeg.intellij.builder.ServiceBuilder;
-import org.codeg.intellij.entity.ClassEntity;
-import org.codeg.intellij.util.DBUtils;
 import com.intellij.openapi.fileChooser.FileChooser;
 import com.intellij.openapi.fileChooser.FileChooserDescriptor;
 import com.intellij.openapi.project.Project;
@@ -16,6 +7,15 @@ import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.http.util.TextUtils;
+import org.codeg.intellij.builder.DaoBuilder;
+import org.codeg.intellij.builder.EntityBuilder;
+import org.codeg.intellij.builder.MapperBuilder;
+import org.codeg.intellij.builder.ServiceBuilder;
+import org.codeg.intellij.config.Cache;
+import org.codeg.intellij.entity.ClassEntity;
+import org.codeg.intellij.entity.FieldEntity;
+import org.codeg.intellij.util.DBUtils;
+import org.codeg.intellij.util.RegexUtils;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -48,6 +48,7 @@ public class CodeDialog extends JDialog {
     private JRadioButton appendRBtn;
     private JLabel serviceLabel;
     private JLabel daoLabel;
+    private JButton buttonSetting;
     private Project project;
 
     public CodeDialog(Project project) {
@@ -57,9 +58,21 @@ public class CodeDialog extends JDialog {
         getRootPane().setDefaultButton(buttonOK);
         initData();
         initListener();
+
+    }
+
+    private void openSettingDialog() {
+        SettingDialog settingDialog = new SettingDialog(project);
+        settingDialog.setSize(600, 600);
+        settingDialog.setLocationRelativeTo(null);
+        settingDialog.setVisible(true);
     }
 
     private void initData() {
+        daoDir.setText(Cache.getInstant().getDaoPath());
+        serviceDir.setText(Cache.getInstant().getServicePath());
+        entityDir.setText(Cache.getInstant().getEntityPath());
+        mapperDir.setText(Cache.getInstant().getMapperPath());
         onAppend();
     }
 
@@ -68,6 +81,12 @@ public class CodeDialog extends JDialog {
         buttonCancel.addActionListener(e -> onCancel());
         appendRBtn.addActionListener(e -> onAppend());
         overrideRBtn.addActionListener(e -> onOverride());
+        mapperDirBtn.addActionListener(e -> chooseDir(mapperDir));
+        serviceDirBtn.addActionListener(e -> chooseDir(serviceDir));
+        daoDirBtn.addActionListener(e -> chooseDir(daoDir));
+        entityDirBtn.addActionListener(e -> chooseDir(entityDir));
+        buttonSetting.addActionListener(e -> openSettingDialog());
+
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
@@ -78,11 +97,6 @@ public class CodeDialog extends JDialog {
         });
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
-        mapperDirBtn.addActionListener(e -> chooseDir(mapperDir));
-        serviceDirBtn.addActionListener(e -> chooseDir(serviceDir));
-        daoDirBtn.addActionListener(e -> chooseDir(daoDir));
-        entityDirBtn.addActionListener(e -> chooseDir(entityDir));
-
     }
     private void onAppend() {
         serviceLabel.setVisible(false);
@@ -174,14 +188,6 @@ public class CodeDialog extends JDialog {
 
     private void onCancel() {
         dispose();
-    }
-
-    public static void main(String[] args) {
-        CodeDialog dialog = new CodeDialog(null);
-        dialog.pack();
-        dialog.setSize(600, 400);
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
     }
 
     public void setProject(Project project) {
