@@ -15,17 +15,17 @@ Restart IDE.
 - [x] 支持追加不存在的sql字段代码（entity,mapper）
 - [x] 支持lombok风格代码生成
 - [x] 生成mybatis代码（entity,service,dao,mapper）
-- [ ] 支持选择是否删除表名/字段前缀
+- [x] 支持选择是否删除表名/字段前缀
+- [x] 配置中心
 - [ ] 支持get/set代码风格生成
-- [ ] 配置中心
 
 ### 使用说明
-#### append方式使用说明：
+#### append方式使用说明（method of application）：
 ![append使用方法](https://github.com/laoziyaonitian/codeAppend/blob/master/file/append.gif)
 > * append方式不会覆盖文件，只会追加不存在的字段
 > * 默认删除表名前缀
 
-#### override方式使用说明：
+#### override方式使用说明（method of application）：
 ![override使用方法](https://github.com/laoziyaonitian/codeAppend/blob/master/file/override.gif)
 > * override会生成代码文件，如果已存在会覆盖代码文件
 > * 默认删除表名前缀
@@ -79,3 +79,9 @@ CREATE TABLE `pre_test2` (
 > * v1.0.0
 > * 输入sql，追加生成lombok风格的mybatis相关代码
 > * 支持追加新字段（append）和全量覆盖（override）两种方式
+
+> * v1.0.1
+> * 新增配置界面
+> * dir默认填充上一次的目录
+> * 支持前缀配置是否处理
+> * 修复bug
