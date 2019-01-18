@@ -12,11 +12,13 @@
 Restart IDE.
 
 ### 功能清单
-- [x] 支持追加不存在的sql字段代码（entity,mapper）
+- [x] 支持追加/生成不存在的sql字段代码（entity,mapper）
 - [x] 支持lombok风格代码生成
 - [x] 生成mybatis代码（entity,service,dao,mapper）
 - [x] 支持选择是否删除表名/字段前缀
 - [x] 配置中心
+- [ ] 支持配置实体是否生成@TableField
+- [ ] 支持生成非mybatis-plus风格的正常Mybatis代码
 - [ ] 支持get/set代码风格生成
 
 ### 使用说明
