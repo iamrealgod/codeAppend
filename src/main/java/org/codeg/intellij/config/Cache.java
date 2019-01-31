@@ -45,6 +45,19 @@ public class Cache {
         return cache;
     }
 
+    public static void reset() {
+        if (Objects.isNull(cache)) {
+            cache = new Cache();
+        }
+        cache.setServicePath(StringUtils.EMPTY);
+        cache.setServicePackage(StringUtils.EMPTY);
+        cache.setDaoPath(StringUtils.EMPTY);
+        cache.setDaoPackage(StringUtils.EMPTY);
+        cache.setEntityPath(StringUtils.EMPTY);
+        cache.setEntityPackage(StringUtils.EMPTY);
+        cache.setMapperPath(StringUtils.EMPTY);
+    }
+
     public String getServicePath() {
         return servicePath;
     }

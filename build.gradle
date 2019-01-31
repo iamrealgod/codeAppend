@@ -17,5 +17,9 @@ intellij {
     updateSinceUntilBuild false
 }
 
+dependencies {
+    compile "com.carrotsearch.randomizedtesting:junit4-ant:2.5.2"
+}
+
 group 'org.codeg.intellij'
-version '1.0.1'
+version '1.0.2'

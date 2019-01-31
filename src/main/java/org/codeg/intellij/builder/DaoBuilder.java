@@ -1,6 +1,7 @@
 package org.codeg.intellij.builder;
 
 import org.codeg.intellij.config.Cache;
+import org.codeg.intellij.config.Config;
 import org.codeg.intellij.config.Constants;
 import org.codeg.intellij.entity.ClassEntity;
 import org.codeg.intellij.util.FileUtils;
@@ -22,7 +23,8 @@ public class DaoBuilder {
         String daoPath = Cache.getInstant().getDaoPath();
         if (StringUtils.isNotBlank(daoPath)) {
             // 接口类处理
-            String content = Constants.daoStr.replaceAll("\\{daoPackage}", Cache.getInstant().getDaoPackage()).
+            final String daoStr = Config.getInstant().getMybatisPlusChk() ? Constants.daoStr : Constants.daoStr_without_mybatis_plus;
+            String content = daoStr.replaceAll("\\{daoPackage}", Cache.getInstant().getDaoPackage()).
                     replaceAll("\\{entityPackage}", Cache.getInstant().getEntityPackage()).
                     replaceAll("\\{className}", classEntity.getClassName());
             final String daoFilePath = StringUtils.getDaoFilePath(Cache.getInstant().getDaoPath(), classEntity.getClassName());

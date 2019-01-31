@@ -17,9 +17,10 @@ Restart IDE.
 - [x] 生成mybatis代码（entity,service,dao,mapper）
 - [x] 支持选择是否删除表名/字段前缀
 - [x] 配置中心
-- [ ] 支持配置实体是否生成@TableField
-- [ ] 支持生成非mybatis-plus风格的正常Mybatis代码
-- [ ] 支持get/set代码风格生成
+- [x] 支持get/set代码风格生成
+- [x] 支持配置entity是否生成@TableField
+- [x] 支持配置是否生成mybatis-plus格式代码
+- [x] 配置变动实时预览
 
 ### 使用说明
 #### append方式使用说明（method of application）：
@@ -31,7 +32,7 @@ Restart IDE.
 ![override使用方法](https://github.com/laoziyaonitian/codeAppend/blob/master/file/override.gif)
 > * override会生成代码文件，如果已存在会覆盖代码文件
 > * 默认删除表名前缀
-ps:不需要生成的文件可以不填写文件生成目录
+> * ps:不需要生成的文件可以不填写文件生成目录
 
 #### sql code example:
 ```sql
@@ -87,3 +88,9 @@ CREATE TABLE `pre_test2` (
 > * dir默认填充上一次的目录
 > * 支持前缀配置是否处理
 > * 修复bug
+
+> * v1.0.2
+> * 支持getset
+> * 支持entity是否生成@TableField
+> * 配置界面新增参数
+> * 配置变动可实时预览

@@ -12,6 +12,7 @@ import org.codeg.intellij.builder.EntityBuilder;
 import org.codeg.intellij.builder.MapperBuilder;
 import org.codeg.intellij.builder.ServiceBuilder;
 import org.codeg.intellij.config.Cache;
+import org.codeg.intellij.config.Config;
 import org.codeg.intellij.entity.ClassEntity;
 import org.codeg.intellij.entity.FieldEntity;
 import org.codeg.intellij.util.DBUtils;
@@ -56,14 +57,18 @@ public class CodeDialog extends JDialog {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
-        initData();
-        initListener();
+        try {
+            initData();
+            initListener();
+        } catch (Exception e) {
+            reset();
+        }
 
     }
 
     private void openSettingDialog() {
         SettingDialog settingDialog = new SettingDialog(project);
-        settingDialog.setSize(600, 600);
+        settingDialog.setSize(900, 620);
         settingDialog.setLocationRelativeTo(null);
         settingDialog.setVisible(true);
     }
@@ -142,14 +147,15 @@ public class CodeDialog extends JDialog {
             }
             // 生成文件
             for (String key : entityMap.keySet()) {
-                final ClassEntity classEntity = DBUtils.getClassEntity(key);
-                final List<FieldEntity> fieldEntities = DBUtils.getFieldEntities(entityMap.get(key));
+                final ClassEntity classEntity = DBUtils.getClassEntity(key, Config.getInstant().getTbPrefixType(),
+                        Config.getInstant().getTbPrefix());
+                final List<FieldEntity> fieldEntities = DBUtils.getFieldEntities(entityMap.get(key),
+                        Config.getInstant().getFdPrefixType(), Config.getInstant().getFdPrefix());
                 if (appendRBtn.isSelected()) {
                     // 追加属性到实体文件
                     EntityBuilder.appendEntityFile(classEntity, fieldEntities);
                     // 追加属性到Mapper文件
                     MapperBuilder.appendMapperFile(classEntity, fieldEntities);
-                    Messages.showMessageDialog(project, "append successful!", "SuccessMessage", Messages.getInformationIcon());
                 } else {
                     // 生成实体文件
                     EntityBuilder.buildEntityFile(classEntity, fieldEntities);
@@ -159,12 +165,20 @@ public class CodeDialog extends JDialog {
                     ServiceBuilder.buildServiceFile(classEntity);
                     // 生成dao文件
                     DaoBuilder.buildDaoFile(classEntity);
-                    Messages.showMessageDialog(project, "generate successful!", "SuccessMessage", Messages.getInformationIcon());
                 }
             }
+            Messages.showMessageDialog(project, "generate successful!", "SuccessMessage", Messages.getInformationIcon());
+            dispose();
         } catch (Exception e) {
-            Messages.showErrorDialog(project,"unknown error! please retry.","未知错误");
+            Messages.showErrorDialog(project,"unknown error! we clear the cache and config, please retry.","未知错误");
+            reset();
         }
+    }
+
+    private void reset() {
+        // 重置所有配置
+        Config.reset();
+        Cache.reset();
         dispose();
     }
 

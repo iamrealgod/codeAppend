@@ -16,7 +16,6 @@ public class MainAction extends AnAction implements DumbAware{
 
     @Override
     public void actionPerformed(AnActionEvent e) {
-        // TODO: insert action logic here
         Project project = e.getData(PlatformDataKeys.PROJECT);
         CodeDialog jsonD = new CodeDialog(project);
         jsonD.setProject(project);

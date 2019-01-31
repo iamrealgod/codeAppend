@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>codeAppend</id>
   <name>codeAppend</name>
-  <version>1.0.1</version>
+  <version>1.0.2</version>
   <vendor email="IamRealGod@163.com">IamRealGod</vendor>
 
   <description><![CDATA[
@@ -13,12 +13,11 @@
 
   <change-notes><![CDATA[
   <p>
-    v1.0.0
+    v1.0.2
     <ul>
-    <li>New: Add setting config dialog. </li>
-    <li>New: Directory add default value.</li>
-    <li>New: Table and field prefix handle.</li>
-    <li>New: Bug fix.</li>
+    <li>support getset style. </li>
+    <li>config can del @TableField.</li>
+    <li>Real-time preview of configuration changes.</li>
     </ul>
   </p>
     ]]>

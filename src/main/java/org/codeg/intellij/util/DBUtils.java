@@ -1,6 +1,5 @@
 package org.codeg.intellij.util;
 
-import org.codeg.intellij.config.Config;
 import org.codeg.intellij.config.Constants;
 import org.codeg.intellij.entity.ClassEntity;
 import org.codeg.intellij.entity.FieldEntity;
@@ -20,6 +19,9 @@ public class DBUtils {
      * @return
      */
     public static String toClassName(String tableName) {
+        if (tableName.startsWith(Constants.UNDER_LINE)) {
+            tableName = tableName.substring(1, tableName.length());
+        }
         final String[] split = tableName.split(Constants.UNDER_LINE);
         for (int i = 0; i < split.length; i++) {
             split[i] = String.valueOf(split[i].charAt(0)).toUpperCase() + split[i].substring(1);
@@ -80,15 +82,15 @@ public class DBUtils {
      * @param tableName
      * @return
      */
-    public static ClassEntity getClassEntity(String tableName) {
+    public static ClassEntity getClassEntity(String tableName, String tbPrefixType, String tbPrefix) {
         ClassEntity entity = new ClassEntity();
         entity.setTableName(tableName);
-        tableName = StringUtils.handlePrefix(tableName,Config.getInstant().getTbPrefixType(),Config.getInstant().getTbPrefix());
+        tableName = StringUtils.handlePrefix(tableName, tbPrefixType, tbPrefix);
         entity.setClassName(DBUtils.toClassName(tableName));
         return entity;
     }
 
-    public static List<FieldEntity> getFieldEntities(String fieldSql) {
-        return RegexUtils.parseFieldSql(fieldSql);
+    public static List<FieldEntity> getFieldEntities(String fieldSql, String fdPrefixType, String fdPrefix) {
+        return RegexUtils.parseFieldSql(fieldSql, fdPrefixType, fdPrefix);
     }
 }

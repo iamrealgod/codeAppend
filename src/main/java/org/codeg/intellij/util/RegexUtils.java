@@ -1,6 +1,5 @@
 package org.codeg.intellij.util;
 
-import org.codeg.intellij.config.Config;
 import org.codeg.intellij.config.Constants;
 import org.codeg.intellij.entity.FieldEntity;
 
@@ -40,7 +39,7 @@ public class RegexUtils {
         return entityMap;
     }
 
-    public static List<FieldEntity> parseFieldSql(String sql) {
+    public static List<FieldEntity> parseFieldSql(String sql, String fdPrefixType, String fdPrefix) {
         // 查找表名和字段语句
         Matcher matcher = Constants.FIELD_REGEX.matcher(sql);
         List<FieldEntity> fieldEntities = new ArrayList<>();
@@ -51,7 +50,7 @@ public class RegexUtils {
             String column = matcher.group(1);
             param.setColumn(column);
             // 字段前缀处理
-            column = StringUtils.handlePrefix(column, Config.getInstant().getFdPrefixType(),Config.getInstant().getFdPrefix());
+            column = StringUtils.handlePrefix(column, fdPrefixType, fdPrefix);
             param.setProperty(DBUtils.toProperty(column));
             param.setColumnType(matcher.group(2));
             param.setPropertyType(DBUtils.toPropertyType(param.getColumnType()));

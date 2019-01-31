@@ -23,25 +23,29 @@ public class MapperBuilder {
         String mapperPath = Cache.getInstant().getMapperPath();
         if (StringUtils.isNotBlank(mapperPath)) {
             // result处理
-            StringBuilder result = new StringBuilder();
-            StringBuilder cloumns = new StringBuilder();
-            for (FieldEntity fieldEntity : fieldEntities) {
-                result.append(Constants.mapperResultStr.replaceAll("\\{column}", fieldEntity.getColumn())
-                        .replaceAll("\\{property}",fieldEntity.getProperty()));
-                cloumns.append(Constants.mapperColumnsStr.replaceAll("\\{column}", fieldEntity.getColumn()));
-            }
-            // 去除逗号
-            String columnsStr = cloumns.toString();
-            columnsStr = columnsStr.substring(0, columnsStr.length() - 1);
-            // mapper文件处理
-            String content = Constants.mapperStr.replaceAll("\\{daoPackage}", Cache.getInstant().getDaoPackage()).
-                    replaceAll("\\{entityPackage}", Cache.getInstant().getEntityPackage()).
-                    replaceAll("\\{resultFields}", result.toString()).
-                    replaceAll("\\{columns}", columnsStr).
-                    replaceAll("\\{className}", classEntity.getClassName());
+            String content = buildMapperStr(classEntity, fieldEntities);
             final String javaFilePath = StringUtils.getMapperFilePath(Cache.getInstant().getMapperPath(), classEntity.getClassName());
             FileUtils.createFile(javaFilePath, content);
         }
+    }
+
+    public static String buildMapperStr(ClassEntity classEntity, List<FieldEntity> fieldEntities) {
+        StringBuilder result = new StringBuilder();
+        StringBuilder cloumns = new StringBuilder();
+        for (FieldEntity fieldEntity : fieldEntities) {
+            result.append(Constants.mapperResultStr.replaceAll("\\{column}", fieldEntity.getColumn())
+                    .replaceAll("\\{property}",fieldEntity.getProperty()));
+            cloumns.append(Constants.mapperColumnsStr.replaceAll("\\{column}", fieldEntity.getColumn()));
+        }
+        // 去除逗号
+        String columnsStr = cloumns.toString();
+        columnsStr = columnsStr.substring(0, columnsStr.length() - 1);
+        // mapper文件处理
+        return Constants.mapperStr.replaceAll("\\{daoPackage}", Cache.getInstant().getDaoPackage()).
+                replaceAll("\\{entityPackage}", Cache.getInstant().getEntityPackage()).
+                replaceAll("\\{resultFields}", result.toString()).
+                replaceAll("\\{columns}", columnsStr).
+                replaceAll("\\{className}", classEntity.getClassName());
     }
 
     public static void appendMapperFile(ClassEntity classEntity, List<FieldEntity> fieldEntities) {
@@ -56,11 +60,13 @@ public class MapperBuilder {
             return;
         }
         // 设置替换标志
-        String replaceContent = originContent.replaceFirst(replaceResultStr, replaceResultStr + "\n" + "{appendResultFields}")
+        String replaceContent = originContent.replaceFirst(replaceResultStr, replaceResultStr + "{appendResultFields}")
                                 .replaceFirst(replaceFieldsStr,"\n\t\t{appendColumns}\n\t");
         // 处理追加内容
         StringBuilder appendResultFields = new StringBuilder();
         StringBuilder appendColumns = new StringBuilder();
+        // 换行标识
+        int index = 1;
         for (FieldEntity fieldEntity : fieldEntities) {
             final String column = fieldEntity.getColumn();
             if (!originContent.contains(StringUtils.mapperColumn(column))) {
@@ -68,10 +74,19 @@ public class MapperBuilder {
                         .replaceAll("\\{property}",fieldEntity.getProperty()));
             }
             appendColumns.append(Constants.mapperColumnsStr.replaceAll("\\{column}", fieldEntity.getColumn()));
+            // 换行
+            if (appendColumns.toString().length() / (index * Constants.LINE_BREAK_NUM) == 1) {
+                appendColumns.append("\n");
+                index++;
+            }
         }
         // 去除逗号
         String columnsStr = appendColumns.toString();
-        columnsStr = columnsStr.substring(0, columnsStr.length() - 1);
+        if (columnsStr.endsWith("\n")) {
+            columnsStr = columnsStr.substring(0, columnsStr.length() - 2);
+        } else {
+            columnsStr = columnsStr.substring(0, columnsStr.length() - 1);
+        }
         replaceContent = replaceContent.replace("{appendResultFields}", appendResultFields.toString())
                         .replace("{appendColumns}",columnsStr);
         FileUtils.createFile(javaFilePath, replaceContent);
