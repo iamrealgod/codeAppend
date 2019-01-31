@@ -15,6 +15,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Objects;
 
 public class SettingDialog extends JDialog {
     private Project project;
@@ -35,6 +36,9 @@ public class SettingDialog extends JDialog {
     private JTextArea mapperExample;
     private JCheckBox mybatisPlusCheckBox;
     private JTextArea entityExample;
+    private JTextField mapperSuffix;
+    private JLabel exampleClassName;
+    private JLabel exampleMapperName;
 
     public SettingDialog(Project project) {
         this.project = project;
@@ -66,6 +70,7 @@ public class SettingDialog extends JDialog {
             fdPrefixDelCustomRbtn.setSelected(PrefixType.OTHER.name().equals(Config.getInstant().getFdPrefixType()));
             tbPrefix.setText(Config.getInstant().getTbPrefix());
             fdPrefix.setText(Config.getInstant().getFdPrefix());
+            mapperSuffix.setText(Config.getInstant().getMapperSuffix());
             initExample();
         } catch (Exception e) {
             Messages.showErrorDialog(project,"unknown error! we clear the cache and config, please retry.","未知错误");
@@ -79,8 +84,11 @@ public class SettingDialog extends JDialog {
         String tbPrefixStr = tbPrefixDelCustomRbtn.isSelected() && StringUtils.isNotBlank(tbPrefix.getText()) ? tbPrefix.getText() : "pre";
         String fdPrefixType = fdPrefixDelCustomRbtn.isSelected() ? PrefixType.OTHER.name() : (fdPrefixDelRbtn.isSelected() ? PrefixType.DEL.name() : PrefixType.STET.name());
         String fdPrefixStr = fdPrefixDelCustomRbtn.isSelected() && StringUtils.isNotBlank(fdPrefix.getText()) ? fdPrefix.getText() : "pre";
-        entityExample.setText(ExampleBuilder.buildExampleEntity(columnChkBtn.isSelected(), appendType, tbPrefixType, tbPrefixStr, fdPrefixType, fdPrefixStr));
-        mapperExample.setText(ExampleBuilder.buildExampleMapper(tbPrefixType, tbPrefixStr, fdPrefixType, fdPrefixStr));
+        String mapperSuffixStr = Objects.isNull(mapperSuffix.getText()) ? StringUtils.EMPTY : mapperSuffix.getText();
+        entityExample.setText(ExampleBuilder.buildExampleEntityContent(columnChkBtn.isSelected(), appendType, tbPrefixType, tbPrefixStr, fdPrefixType, fdPrefixStr));
+        mapperExample.setText(ExampleBuilder.buildExampleMapperContent(tbPrefixType, tbPrefixStr, fdPrefixType, fdPrefixStr));
+        exampleClassName.setText(ExampleBuilder.buildExampleEntityName(tbPrefixType, tbPrefixStr));
+        exampleMapperName.setText(ExampleBuilder.buildExampleMapperName(tbPrefixType, tbPrefixStr, mapperSuffixStr));
     }
 
     private void initListener() {
@@ -122,6 +130,18 @@ public class SettingDialog extends JDialog {
                 initExample();
             }
         });
+        mapperSuffix.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyPressed(KeyEvent e) {
+                initExample();
+            }
+        });
+        mapperSuffix.addKeyListener(new KeyAdapter() {
+            @Override
+            public void keyReleased(KeyEvent e) {
+                initExample();
+            }
+        });
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -154,8 +174,8 @@ public class SettingDialog extends JDialog {
                     return;
                 }
                 Config.getInstant().setTbPrefixType(PrefixType.OTHER.name());
-                Config.getInstant().setTbPrefix(tbPrefix.getText());
             }
+            Config.getInstant().setTbPrefix(Objects.isNull(tbPrefix.getText()) ? StringUtils.EMPTY : tbPrefix.getText());
             // 字段前缀
             if (fdPrefixDelRbtn.isSelected()) {
                 Config.getInstant().setFdPrefixType(PrefixType.DEL.name());
@@ -167,11 +187,12 @@ public class SettingDialog extends JDialog {
                     return;
                 }
                 Config.getInstant().setFdPrefixType(PrefixType.OTHER.name());
-                Config.getInstant().setFdPrefix(fdPrefix.getText());
             }
+            Config.getInstant().setFdPrefix(Objects.isNull(fdPrefix.getText()) ? StringUtils.EMPTY : fdPrefix.getText());
             // tableField
             Config.getInstant().setColumnChk(columnChkBtn.isSelected());
             Config.getInstant().setMybatisPlusChk(mybatisPlusCheckBox.isSelected());
+            Config.getInstant().setMapperSuffix(Objects.isNull(mapperSuffix.getText()) ? StringUtils.EMPTY : mapperSuffix.getText());
 
             Config.getInstant().save();
             dispose();

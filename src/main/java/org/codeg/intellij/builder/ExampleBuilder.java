@@ -1,9 +1,11 @@
 package org.codeg.intellij.builder;
 
+import org.codeg.intellij.config.Constants;
 import org.codeg.intellij.entity.ClassEntity;
 import org.codeg.intellij.entity.FieldEntity;
 import org.codeg.intellij.util.DBUtils;
 import org.codeg.intellij.util.RegexUtils;
+import org.codeg.intellij.util.StringUtils;
 
 import java.util.List;
 import java.util.Map;
@@ -22,7 +24,7 @@ public class ExampleBuilder {
             + "  KEY `idx_create_time` (`create_time`) USING BTREE\n"
             + ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='example table';";
 
-    public static String buildExampleEntity(boolean columnChk, String appendType, String tbPrefixType, String tbPrefix, String fdPrefixType, String fdPrefix) {
+    public static String buildExampleEntityContent(boolean columnChk, String appendType, String tbPrefixType, String tbPrefix, String fdPrefixType, String fdPrefix) {
         Map<String, String> entityMap = RegexUtils.parseOriginSql(SQL);
         for (String key : entityMap.keySet()) {
             final ClassEntity classEntity = DBUtils.getClassEntity(key, tbPrefixType, tbPrefix);
@@ -33,7 +35,7 @@ public class ExampleBuilder {
         return "";
     }
 
-    public static String buildExampleMapper(String tbPrefixType, String tbPrefix, String fdPrefixType, String fdPrefix) {
+    public static String buildExampleMapperContent(String tbPrefixType, String tbPrefix, String fdPrefixType, String fdPrefix) {
         Map<String, String> entityMap = RegexUtils.parseOriginSql(SQL);
         for (String key : entityMap.keySet()) {
             final ClassEntity classEntity = DBUtils.getClassEntity(key, tbPrefixType, tbPrefix);
@@ -43,4 +45,22 @@ public class ExampleBuilder {
         }
         return "";
     }
+
+    public static String buildExampleEntityName(String tbPrefixType, String tbPrefix){
+        Map<String, String> entityMap = RegexUtils.parseOriginSql(SQL);
+        for (String key : entityMap.keySet()) {
+            final ClassEntity classEntity = DBUtils.getClassEntity(key, tbPrefixType, tbPrefix);
+            return classEntity.getClassName().concat(Constants.JAVA_SUFFIX);
+        }
+        return "";
+    }
+    public static String buildExampleMapperName(String tbPrefixType, String tbPrefix, String mapperSuffix){
+        Map<String, String> entityMap = RegexUtils.parseOriginSql(SQL);
+        for (String key : entityMap.keySet()) {
+            final ClassEntity classEntity = DBUtils.getClassEntity(key, tbPrefixType, tbPrefix);
+            return StringUtils.getMapperName(classEntity.getClassName(), mapperSuffix);
+        }
+        return "";
+    }
+
 }

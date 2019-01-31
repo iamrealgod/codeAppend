@@ -22,6 +22,7 @@ public class Config {
     private String fdPrefix;
     private boolean columnChk;
     private boolean mybatisPlusChk;
+    private String mapperSuffix;
 
     public void save() {
         PropertiesComponent.getInstance().setValue("appendType", appendType);
@@ -31,6 +32,7 @@ public class Config {
         PropertiesComponent.getInstance().setValue("fdPrefix", fdPrefix);
         PropertiesComponent.getInstance().setValue("columnChk", columnChk);
         PropertiesComponent.getInstance().setValue("mybatisPlusChk", mybatisPlusChk);
+        PropertiesComponent.getInstance().setValue("mapperSuffix", mapperSuffix);
     }
 
     public static Config getInstant() {
@@ -43,6 +45,7 @@ public class Config {
             config.setFdPrefix(PropertiesComponent.getInstance().getValue("fdPrefix", StringUtils.EMPTY));
             config.setColumnChk(PropertiesComponent.getInstance().getBoolean("columnChk", true));
             config.setMybatisPlusChk(PropertiesComponent.getInstance().getBoolean("mybatisPlusChk", true));
+            config.setMapperSuffix(PropertiesComponent.getInstance().getValue("mapperSuffix", Constants.MAPPER_NAME));
         }
         return config;
     }
@@ -58,6 +61,16 @@ public class Config {
         config.setFdPrefix(StringUtils.EMPTY);
         config.setColumnChk(true);
         config.setMybatisPlusChk(true);
+        config.setMapperSuffix(Constants.MAPPER_NAME);
+        config.save();
+    }
+
+    public String getMapperSuffix() {
+        return mapperSuffix;
+    }
+
+    public void setMapperSuffix(String mapperSuffix) {
+        this.mapperSuffix = mapperSuffix;
     }
 
     public boolean getMybatisPlusChk() {

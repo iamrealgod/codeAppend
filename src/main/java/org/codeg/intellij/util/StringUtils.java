@@ -74,8 +74,12 @@ public class StringUtils extends org.apache.commons.lang.StringUtils{
         return path.concat(StringUtils.separator()).concat(className).concat(Constants.DAO_NAME).concat(Constants.JAVA_SUFFIX);
     }
 
-    public static String getMapperFilePath(String path, String className) {
-        return path.concat(StringUtils.separator()).concat(className).concat(Constants.MAPPER_NAME).concat(Constants.MAPPER_SUFFIX);
+    public static String getMapperFilePath(String path, String className, String mapperSuffix) {
+        return path.concat(StringUtils.separator()).concat(getMapperName(className, mapperSuffix));
+    }
+
+    public static String getMapperName(String className, String mapperSuffix) {
+        return className.concat(mapperSuffix).concat(Constants.XML);
     }
 
     public static String entityProperty(String property) {
@@ -85,4 +89,5 @@ public class StringUtils extends org.apache.commons.lang.StringUtils{
     public static String mapperColumn(String column) {
         return "column=\""+column+"\"";
     }
+
 }

@@ -22,7 +22,7 @@ public class Constants {
     public static final String ID = "id";
     public static final String IMPL_DIR_NAME = "impl";
     public static final String JAVA_SUFFIX = ".java";
-    public static final String MAPPER_SUFFIX = ".xml";
+    public static final String XML = ".xml";
     public static final String SERVICE_NAME = "Service";
     public static final String SERVICE_IMPL_NAME = "ServiceImpl";
     public static final String DAO_NAME = "Dao";

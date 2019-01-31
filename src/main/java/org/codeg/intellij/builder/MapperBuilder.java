@@ -1,6 +1,7 @@
 package org.codeg.intellij.builder;
 
 import org.codeg.intellij.config.Cache;
+import org.codeg.intellij.config.Config;
 import org.codeg.intellij.config.Constants;
 import org.codeg.intellij.entity.ClassEntity;
 import org.codeg.intellij.entity.FieldEntity;
@@ -24,7 +25,8 @@ public class MapperBuilder {
         if (StringUtils.isNotBlank(mapperPath)) {
             // result处理
             String content = buildMapperStr(classEntity, fieldEntities);
-            final String javaFilePath = StringUtils.getMapperFilePath(Cache.getInstant().getMapperPath(), classEntity.getClassName());
+            final String javaFilePath = StringUtils.getMapperFilePath(Cache.getInstant().getMapperPath(), classEntity.getClassName(),
+                    Config.getInstant().getMapperSuffix());
             FileUtils.createFile(javaFilePath, content);
         }
     }
@@ -50,7 +52,8 @@ public class MapperBuilder {
 
     public static void appendMapperFile(ClassEntity classEntity, List<FieldEntity> fieldEntities) {
         // 获取实体文件
-        final String javaFilePath = StringUtils.getMapperFilePath(Cache.getInstant().getMapperPath(), classEntity.getClassName());
+        final String javaFilePath = StringUtils.getMapperFilePath(Cache.getInstant().getMapperPath(),
+                classEntity.getClassName(), Config.getInstant().getMapperSuffix());
         // 获取内容
         final String originContent = FileUtils.readContent(javaFilePath);
         // 获取追加标志
@@ -76,14 +79,14 @@ public class MapperBuilder {
             appendColumns.append(Constants.mapperColumnsStr.replaceAll("\\{column}", fieldEntity.getColumn()));
             // 换行
             if (appendColumns.toString().length() / (index * Constants.LINE_BREAK_NUM) == 1) {
-                appendColumns.append("\n");
+                appendColumns.append("\n\t\t");
                 index++;
             }
         }
         // 去除逗号
         String columnsStr = appendColumns.toString();
-        if (columnsStr.endsWith("\n")) {
-            columnsStr = columnsStr.substring(0, columnsStr.length() - 2);
+        if (columnsStr.endsWith("\t")) {
+            columnsStr = columnsStr.substring(0, columnsStr.length() - 4);
         } else {
             columnsStr = columnsStr.substring(0, columnsStr.length() - 1);
         }
