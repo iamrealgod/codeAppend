@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>codeAppend</id>
   <name>codeAppend</name>
-  <version>1.0.2</version>
+  <version>1.0.3</version>
   <vendor email="IamRealGod@163.com">IamRealGod</vendor>
 
   <description><![CDATA[
@@ -13,12 +13,10 @@
 
   <change-notes><![CDATA[
   <p>
-    v1.0.2
+    v1.0.3
     <ul>
-    <li>support getset style. </li>
-    <li>config can del @TableField.</li>
-    <li>Real-time preview of configuration changes.</li>
     <li>support config mapper suffix.</li>
+    <li>bug fix.</li>
     </ul>
   </p>
     ]]>

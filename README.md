@@ -21,7 +21,7 @@ Restart IDE.
 - [x] 支持配置entity是否生成@TableField
 - [x] 支持配置是否生成mybatis-plus格式代码
 - [x] 配置变动实时预览
-- [ ] 支持自定义Mapper文件后缀
+- [x] 支持自定义Mapper文件后缀
 
 ### 使用说明
 #### append方式使用说明（method of application）：
@@ -97,3 +97,8 @@ CREATE TABLE `pre_test2` (
 > * 支持entity是否生成@TableField
 > * 配置界面新增参数
 > * 配置变动可实时预览
+
+> * v1.0.3
+> * 支持配置mapper后缀
+> * bug fix.
+
