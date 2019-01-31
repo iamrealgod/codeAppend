@@ -21,18 +21,21 @@ Restart IDE.
 - [x] 支持配置entity是否生成@TableField
 - [x] 支持配置是否生成mybatis-plus格式代码
 - [x] 配置变动实时预览
+- [ ] 支持自定义Mapper文件后缀
 
 ### 使用说明
 #### append方式使用说明（method of application）：
 ![append使用方法](https://github.com/laoziyaonitian/codeAppend/blob/master/file/append.gif)
 > * append方式不会覆盖文件，只会追加不存在的字段
 > * 默认删除表名前缀
+> * ps:mapper文件必须为 className+Mapper.xml 格式才能追加
 
 #### override方式使用说明（method of application）：
 ![override使用方法](https://github.com/laoziyaonitian/codeAppend/blob/master/file/override.gif)
 > * override会生成代码文件，如果已存在会覆盖代码文件
 > * 默认删除表名前缀
 > * ps:不需要生成的文件可以不填写文件生成目录
+
 
 #### sql code example:
 ```sql
