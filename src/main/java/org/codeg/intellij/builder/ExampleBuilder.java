@@ -15,12 +15,12 @@ import java.util.Map;
  */
 public class ExampleBuilder {
     public static final String SQL = "CREATE TABLE `pre_example` (\n"
-            + "  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '主键',\n"
-            + "  `num_no` varchar(64) NOT NULL COMMENT '号码',\n"
-            + "  `longitude` decimal(10,2) DEFAULT NULL COMMENT '地址经度',\n"
-            + "  `update_time` datetime NOT NULL COMMENT '更新时间',\n" + "  PRIMARY KEY (`id`),\n"
+            + "  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT 'primary key',\n"
+            + "  `num_no` varchar(64) NOT NULL COMMENT 'number',\n"
+            + "  `longitude` decimal(10,2) DEFAULT NULL COMMENT 'address longitude',\n"
+            + "  `update_time` datetime NOT NULL COMMENT 'up date',\n" + "  PRIMARY KEY (`id`),\n"
             + "  KEY `idx_create_time` (`create_time`) USING BTREE\n"
-            + ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='地址表';";
+            + ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='example table';";
 
     public static String buildExampleEntity(boolean columnChk, String appendType, String tbPrefixType, String tbPrefix, String fdPrefixType, String fdPrefix) {
         Map<String, String> entityMap = RegexUtils.parseOriginSql(SQL);
