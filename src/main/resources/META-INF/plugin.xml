@@ -18,6 +18,7 @@
     <li>support getset style. </li>
     <li>config can del @TableField.</li>
     <li>Real-time preview of configuration changes.</li>
+    <li>support config mapper suffix.</li>
     </ul>
   </p>
     ]]>
