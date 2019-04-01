@@ -102,3 +102,7 @@ CREATE TABLE `pre_test2` (
 > * 支持配置mapper后缀
 > * bug fix.
 
+> * v1.0.4
+> * 更改生成代码支持为mybatis-plus 3.1.0 的package路径
+> * bug fix.
+
