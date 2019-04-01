@@ -56,14 +56,17 @@ public class StringUtils extends org.apache.commons.lang.StringUtils{
     }
 
     public static String getEntityFilePath(String path, String className) {
+        FileUtils.generateDir(path);
         return path.concat(StringUtils.separator()).concat(className).concat(Constants.JAVA_SUFFIX);
     }
 
     public static String getServiceFilePath(String path, String className) {
+        FileUtils.generateDir(path);
         return path.concat(StringUtils.separator()).concat(className).concat(Constants.SERVICE_NAME).concat(Constants.JAVA_SUFFIX);
     }
 
     public static String getServiceImplFilePath(String path, String className) {
+        FileUtils.generateDir(path);
         final String implDir = path.concat(separator()).concat(Constants.IMPL_DIR_NAME);
         FileUtils.generateDir(implDir);
         return implDir.concat(separator())
@@ -71,10 +74,12 @@ public class StringUtils extends org.apache.commons.lang.StringUtils{
     }
 
     public static String getDaoFilePath(String path, String className) {
+        FileUtils.generateDir(path);
         return path.concat(StringUtils.separator()).concat(className).concat(Constants.DAO_NAME).concat(Constants.JAVA_SUFFIX);
     }
 
     public static String getMapperFilePath(String path, String className, String mapperSuffix) {
+        FileUtils.generateDir(path);
         return path.concat(StringUtils.separator()).concat(getMapperName(className, mapperSuffix));
     }
 

@@ -46,9 +46,9 @@ public class Constants {
      * entity
      */
     public static final String entityStr = "package {entityPackage};\n" + "\n"
-            + "import com.baomidou.mybatisplus.annotations.TableField;\n"
-            + "import com.baomidou.mybatisplus.annotations.TableId;\n"
-            + "import com.baomidou.mybatisplus.annotations.TableName;\n"
+            + "import com.baomidou.mybatisplus.annotation.TableField;\n"
+            + "import com.baomidou.mybatisplus.annotation.TableId;\n"
+            + "import com.baomidou.mybatisplus.annotation.TableName;\n"
             + "import com.baomidou.mybatisplus.enums.IdType;\n" + "{lombokImport}" + "\n"
             + "import java.util.Date;\n" + "\n" + "{lombokData}" + "@TableName(\"{tableName}\")\n"
             + "public class {className} {\n" + "{fields}\n}";
@@ -71,7 +71,7 @@ public class Constants {
      * service
      */
     public static final String serviceStr = "package {servicePackage};\n" + "\n"
-            + "import com.baomidou.mybatisplus.service.IService;\n" + "import {entityPackage}.{className};\n" + "\n"
+            + "import com.baomidou.mybatisplus.extension.service.IService;\n" + "import {entityPackage}.{className};\n" + "\n"
             + "/**\n" + " *  Auto created by codeAppend plugin\n" + " */\n"
             + "public interface {className}Service extends IService<{className}> {\n" + "\n" + "}";
     public static final String serviceStr_without_mybatis_plus = "package {servicePackage};\n" + "\n"
@@ -80,7 +80,7 @@ public class Constants {
             + "public interface {className}Service {\n" + "\n" + "}";
 
     public static final String serviceImplStr = "package {servicePackage}.impl;\n" + "\n"
-            + "import com.baomidou.mybatisplus.service.impl.ServiceImpl;\n" + "import {entityPackage}.{className};\n"
+            + "import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;\n" + "import {entityPackage}.{className};\n"
             + "import {daoPackage}.{className}Dao;\n" + "import {servicePackage}.{className}Service;\n"
             + "import org.springframework.stereotype.Service;\n" + "\n"
             + "/**\n" + " * Auto created by codeAppend plugin\n" + " */\n" + "@Service\n"
@@ -100,7 +100,7 @@ public class Constants {
      * dao
      */
     public static final String daoStr = "package {daoPackage};\n" + "\n"
-            + "import com.baomidou.mybatisplus.mapper.BaseMapper;\n" + "import {entityPackage}.{className};\n" + "\n"
+            + "import com.baomidou.mybatisplus.core.mapper.BaseMapper;\n" + "import {entityPackage}.{className};\n" + "\n"
             + "/**\n" + " * Auto created by codeAppend plugin\n" + " */\n"
             + "public interface {className}Dao extends BaseMapper<{className}> {\n" + "\n" + "}";
     public static final String daoStr_without_mybatis_plus = "package {daoPackage};\n" + "\n"

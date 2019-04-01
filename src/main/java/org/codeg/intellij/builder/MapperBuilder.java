@@ -9,6 +9,7 @@ import org.codeg.intellij.util.FileUtils;
 import org.codeg.intellij.util.RegexUtils;
 import org.codeg.intellij.util.StringUtils;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
@@ -19,7 +20,7 @@ import java.util.Objects;
  */
 public class MapperBuilder {
 
-    public static void buildMapperFile(ClassEntity classEntity, List<FieldEntity> fieldEntities) {
+    public static void buildMapperFile(ClassEntity classEntity, List<FieldEntity> fieldEntities) throws IOException {
         // 查看目录是否为空
         String mapperPath = Cache.getInstant().getMapperPath();
         if (StringUtils.isNotBlank(mapperPath)) {
