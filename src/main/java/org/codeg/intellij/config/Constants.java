@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
  * @date 2018/12/28 10:44
  */
 public class Constants {
-    public static final  Pattern TABLE_REGEX = Pattern.compile("CREATE TABLE `(.*?)` \\((.*?) PRIMARY");
+    public static final  Pattern TABLE_REGEX = Pattern.compile("CREATE TABLE `(.*?)` \\((.*?)(PRIMARY|ENGINE)");
     public static final Pattern FIELD_REGEX = Pattern.compile("`(.+?)` (.+?) .*?('(.*?)')?,");
     public static final Pattern APPEND_ENTITY_FIELD_REGEX = Pattern.compile("private .*? (.*?;.*)");
     public static final Pattern APPEND_MAPPER_RESULT_REGEX = Pattern.compile("<resultMap [\\s\\S]*?</resultMap>");
@@ -29,6 +29,7 @@ public class Constants {
     public static final String MAPPER_NAME = "Mapper";
     public static final String DEFAULT_PACKAGE = "com.codeg";
     public static final int LINE_BREAK_NUM = 128;
+    public static final String KEY_WORD = "USING";
 
     /**
      * 数据库字段类型
@@ -49,12 +50,15 @@ public class Constants {
             + "import com.baomidou.mybatisplus.annotation.TableField;\n"
             + "import com.baomidou.mybatisplus.annotation.TableId;\n"
             + "import com.baomidou.mybatisplus.annotation.TableName;\n"
-            + "import com.baomidou.mybatisplus.annotation.IdType;\n" + "{lombokImport}" + "\n"
-            + "import java.util.Date;\n" + "\n" + "{lombokData}" + "@TableName(\"{tableName}\")\n"
+            + "import com.baomidou.mybatisplus.annotation.IdType;\n"
+            + "{lombokImport}" + "\n"
+            + "import java.util.Date;\n" + "import java.math.BigDecimal;\n"
+            + "\n" + "{lombokData}" + "@TableName(\"{tableName}\")\n"
             + "public class {className} {\n" + "{fields}\n}";
     public static final String entityStr_without_column = "package {entityPackage};\n" + "\n"
             + "{lombokImport}" + "\n"
-            + "import java.util.Date;\n" + "\n" + "{lombokData}"
+            + "import java.util.Date;\n"+ "import java.math.BigDecimal;\n"
+            + "\n" + "{lombokData}"
             + "public class {className} {\n" + "{fields}\n}";
 
     public static final String entityFieldIdStr = "\t@TableId(value = \"id\", type = IdType.AUTO)\n"

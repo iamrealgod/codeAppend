@@ -46,6 +46,12 @@ public class RegexUtils {
         // 熔断处理
         int cutOff = 0;
         while (matcher.find() && cutOff < Constants.MAX_MATCHER) {
+            cutOff++;
+            // 判断是否是索引
+            final String fieldSql = matcher.group();
+            if (fieldSql.contains(Constants.KEY_WORD)) {
+                continue;
+            }
             FieldEntity param = new FieldEntity();
             String column = matcher.group(1);
             param.setColumn(column);
@@ -58,7 +64,6 @@ public class RegexUtils {
                 param.setComment(matcher.group(4));
             }
             fieldEntities.add(param);
-            cutOff++;
         }
         return fieldEntities;
     }

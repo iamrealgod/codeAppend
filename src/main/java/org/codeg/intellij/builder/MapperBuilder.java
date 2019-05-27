@@ -34,15 +34,26 @@ public class MapperBuilder {
 
     public static String buildMapperStr(ClassEntity classEntity, List<FieldEntity> fieldEntities) {
         StringBuilder result = new StringBuilder();
-        StringBuilder cloumns = new StringBuilder();
+        StringBuilder columns = new StringBuilder();
+        // 换行标识
+        int index = 1;
         for (FieldEntity fieldEntity : fieldEntities) {
             result.append(Constants.mapperResultStr.replaceAll("\\{column}", fieldEntity.getColumn())
                     .replaceAll("\\{property}",fieldEntity.getProperty()));
-            cloumns.append(Constants.mapperColumnsStr.replaceAll("\\{column}", fieldEntity.getColumn()));
+            columns.append(Constants.mapperColumnsStr.replaceAll("\\{column}", fieldEntity.getColumn()));
+            // 换行
+            if (columns.toString().length() / (index * Constants.LINE_BREAK_NUM) == 1) {
+                columns.append("\n\t\t");
+                index++;
+            }
         }
         // 去除逗号
-        String columnsStr = cloumns.toString();
-        columnsStr = columnsStr.substring(0, columnsStr.length() - 1);
+        String columnsStr = columns.toString();
+        if (columnsStr.endsWith("\t")) {
+            columnsStr = columnsStr.substring(0, columnsStr.length() - 4);
+        } else {
+            columnsStr = columnsStr.substring(0, columnsStr.length() - 1);
+        }
         // mapper文件处理
         return Constants.mapperStr.replaceAll("\\{daoPackage}", Cache.getInstant().getDaoPackage()).
                 replaceAll("\\{entityPackage}", Cache.getInstant().getEntityPackage()).

@@ -106,3 +106,6 @@ CREATE TABLE `pre_test2` (
 > * 更改生成代码支持为mybatis-plus 3.1.0 的package路径
 > * bug fix.
 
+> * v1.0.5
+> * 修复sql解析错误的问题
+

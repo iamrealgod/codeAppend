@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>codeAppend</id>
   <name>codeAppend</name>
-  <version>1.0.4</version>
+  <version>1.0.5</version>
   <vendor email="IamRealGod@163.com">IamRealGod</vendor>
 
   <description><![CDATA[
@@ -13,9 +13,8 @@
 
   <change-notes><![CDATA[
   <p>
-    v1.0.4
+    v1.0.5
     <ul>
-    <li>support to mybatis-plus v3.1.0 .</li>
     <li>bug fix.</li>
     </ul>
   </p>

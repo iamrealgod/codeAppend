@@ -82,7 +82,7 @@
           <gridbag weightx="1.0" weighty="8.0"/>
         </constraints>
         <properties/>
-        <border type="none" title="sql code"/>
+        <border type="none" title="sql code（Preferably a primary key）"/>
         <children>
           <scrollpane id="4472d">
             <constraints>
@@ -98,7 +98,7 @@
               <component id="76527" class="javax.swing.JTextArea" binding="editTP">
                 <constraints/>
                 <properties>
-                  <toolTipText value=""/>
+                  <toolTipText value="sql with PRIMARY KEY, or generate code maybe wrong"/>
                 </properties>
               </component>
             </children>
