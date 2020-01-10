@@ -1,7 +1,7 @@
 <idea-plugin>
   <id>codeAppend</id>
   <name>codeAppend</name>
-  <version>1.0.5</version>
+  <version>1.0.7</version>
   <vendor email="IamRealGod@163.com">IamRealGod</vendor>
 
   <description><![CDATA[
@@ -13,9 +13,10 @@
 
   <change-notes><![CDATA[
   <p>
-    v1.0.5
+    v1.0.7
     <ul>
     <li>bug fix.</li>
+    <li>修改注释方式.</li>
     </ul>
   </p>
     ]]>

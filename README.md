@@ -109,3 +109,7 @@ CREATE TABLE `pre_test2` (
 > * v1.0.5
 > * 修复sql解析错误的问题
 
+> * v1.0.7
+> * bug fix.
+> * 修改注释方式
+

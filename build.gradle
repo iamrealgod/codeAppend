@@ -1,10 +1,10 @@
 buildscript {
     repositories {
-        mavenCentral()
+        maven{ url 'http://maven.aliyun.com/nexus/content/groups/public/'}
     }
 }
 plugins {
-    id "org.jetbrains.intellij" version "0.4.1"
+    id "org.jetbrains.intellij" version "0.4.15"
 }
 
 apply plugin: 'idea'
@@ -12,14 +12,10 @@ apply plugin: 'org.jetbrains.intellij'
 apply plugin: 'java'
 
 intellij {
-    version 'IC-2017.1' //IntelliJ IDEA 2016.3 dependency; for a full list of IntelliJ IDEA releases please see https://www.jetbrains.com/intellij-repository/releases
+    version '2019.3' //IntelliJ IDEA 2016.3 dependency; for a full list of IntelliJ IDEA releases please see https://www.jetbrains.com/intellij-repository/releases
     pluginName 'codeAppend'
     updateSinceUntilBuild false
 }
 
-dependencies {
-    compile "com.carrotsearch.randomizedtesting:junit4-ant:2.5.2"
-}
-
 group 'org.codeg.intellij'
-version '1.0.5'
+version '1.0.7'

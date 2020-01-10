@@ -61,13 +61,23 @@ public class Constants {
             + "\n" + "{lombokData}"
             + "public class {className} {\n" + "{fields}\n}";
 
-    public static final String entityFieldIdStr = "\t@TableId(value = \"id\", type = IdType.AUTO)\n"
-            + "\tprivate Long id;\t// PRIMARY KEY\n";
-    public static final String entityFieldIdStr_without_column = "\tprivate Long id;\t// PRIMARY KEY\n";
+    public static final String entityFieldIdStr = "/**\n" +
+            "\t * 主键\n" +
+            "\t */\n" +
+            "\t@TableId(value = \"id\", type = IdType.AUTO)\n"
+            + "\tprivate Long id;\n\n";
+    public static final String entityFieldIdStr_without_column = "/**\n" +
+            "\t * 主键\n" +
+            "\t */\n" +
+            "\tprivate Long id;\n\n";
 
-    public static final String entityFieldStr = "\t@TableField(\"{column}\")\n"
-            + "\tprivate {propertyType} {property};\t//{comment}\n";
-    public static final String entityFieldStr_without_column = "\tprivate {propertyType} {property};    //{comment}\n";
+    public static final String entityFieldStr = "\t/**\n" +
+            "\t * {comment}\n" +
+            "\t */\n\t@TableField(\"{column}\")\n"
+            + "\tprivate {propertyType} {property};\n\n";
+    public static final String entityFieldStr_without_column = "\t/**\n" +
+            "\t * {comment}\n" +
+            "\t */\n\tprivate {propertyType} {property};\n\n";
     public static final String entityFieldStr_getset_method = "\tpublic {propertyType} {getProperty}() {\n" + "\t\treturn {property};\n" + "\t}\n" + "\t\n"
             + "\tpublic void {setProperty}({propertyType} {property}) {\n" + "\t\tthis.{property} = {property};\n" + "\t}\n\n";
 
