@@ -13,7 +13,7 @@ public class Constants {
     public static final Pattern APPEND_ENTITY_FIELD_REGEX = Pattern.compile("private .*? (.*?;.*)");
     public static final Pattern APPEND_MAPPER_RESULT_REGEX = Pattern.compile("<resultMap [\\s\\S]*?</resultMap>");
     public static final Pattern APPEND_MAPPER_RESULT_REGEX2 = Pattern.compile("<result .*? .*?(=\".*?\"/>)");
-    public static final Pattern APPEND_MAPPER_FIELDS_REGEX = Pattern.compile("<sql .*?>([\\s\\S]+)</sql>");
+    public static final Pattern APPEND_MAPPER_FIELDS_REGEX = Pattern.compile("<sql .*?>([\\s\\S]+?)</sql>");
     public static final Pattern PACKAGE_JAVA_REGEX = Pattern.compile("java[\\\\|/](.*?[\\\\|/])");
     public static final Pattern PACKAGE_SRC_REGEX = Pattern.compile("src[\\\\|/](.*?[\\\\|/])");
     public static final String UNDER_LINE = "_";
