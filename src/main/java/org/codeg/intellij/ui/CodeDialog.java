@@ -6,6 +6,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.http.util.TextUtils;
 import org.codeg.intellij.builder.DaoBuilder;
 import org.codeg.intellij.builder.EntityBuilder;
@@ -15,6 +16,8 @@ import org.codeg.intellij.config.Cache;
 import org.codeg.intellij.config.Config;
 import org.codeg.intellij.entity.ClassEntity;
 import org.codeg.intellij.entity.FieldEntity;
+import org.codeg.intellij.listener.LabelCellRenderer;
+import org.codeg.intellij.listener.TipsComboBoxUI;
 import org.codeg.intellij.util.DBUtils;
 import org.codeg.intellij.util.RegexUtils;
 
@@ -25,6 +28,7 @@ import java.awt.event.WindowEvent;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  *
@@ -36,20 +40,22 @@ public class CodeDialog extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTextArea editTP;
-    private JTextField mapperDir;
-    private JTextField serviceDir;
-    private JTextField daoDir;
     private JButton mapperDirBtn;
     private JButton serviceDirBtn;
     private JButton daoDirBtn;
     private JPanel editPanel;
-    private JTextField entityDir;
     private JButton entityDirBtn;
     private JRadioButton overrideRBtn;
     private JRadioButton appendRBtn;
     private JLabel serviceLabel;
     private JLabel daoLabel;
     private JButton buttonSetting;
+    private JComboBox<String> mapperDir;
+    private JComboBox<String> entityDir;
+    private JComboBox<String> serviceDir;
+    private JComboBox<String> daoDir;
+    private JLabel entityLabel;
+    private JLabel mapperLabel;
     private Project project;
 
     public CodeDialog(Project project) {
@@ -60,10 +66,22 @@ public class CodeDialog extends JDialog {
         try {
             initData();
             initListener();
+            initUI();
         } catch (Exception e) {
             reset();
         }
 
+    }
+
+    private void initUI() {
+        entityDir.setUI(new TipsComboBoxUI());
+        ((TipsComboBoxUI) entityDir.getUI()).tips();
+        mapperDir.setUI(new TipsComboBoxUI());
+        ((TipsComboBoxUI) mapperDir.getUI()).tips();
+        daoDir.setUI(new TipsComboBoxUI());
+        ((TipsComboBoxUI) daoDir.getUI()).tips();
+        serviceDir.setUI(new TipsComboBoxUI());
+        ((TipsComboBoxUI) serviceDir.getUI()).tips();
     }
 
     private void openSettingDialog() {
@@ -74,15 +92,20 @@ public class CodeDialog extends JDialog {
     }
 
     private void initData() {
-        daoDir.setText(Cache.getInstant().getDaoPath());
-        serviceDir.setText(Cache.getInstant().getServicePath());
-        entityDir.setText(Cache.getInstant().getEntityPath());
-        mapperDir.setText(Cache.getInstant().getMapperPath());
+        daoDir.setSelectedItem(Cache.getInstant().getDaoPath());
+        serviceDir.setSelectedItem(Cache.getInstant().getServicePath());
+        entityDir.setSelectedItem(Cache.getInstant().getEntityPath());
+        mapperDir.setSelectedItem(Cache.getInstant().getMapperPath());
+
+        setComboBoxItems(mapperDir, Cache.getInstant().getMapperPathItem());
+        setComboBoxItems(entityDir, Cache.getInstant().getEntityPathItem());
+        setComboBoxItems(serviceDir, Cache.getInstant().getServicePathItem());
+        setComboBoxItems(daoDir, Cache.getInstant().getDaoPathItem());
         onAppend();
     }
 
     private void initListener() {
-        buttonOK.addActionListener(e -> onOK());
+        buttonOK.addActionListener(e -> confirmOnOK());
         buttonCancel.addActionListener(e -> onCancel());
         appendRBtn.addActionListener(e -> onAppend());
         overrideRBtn.addActionListener(e -> onOverride());
@@ -91,6 +114,12 @@ public class CodeDialog extends JDialog {
         daoDirBtn.addActionListener(e -> chooseDir(daoDir));
         entityDirBtn.addActionListener(e -> chooseDir(entityDir));
         buttonSetting.addActionListener(e -> openSettingDialog());
+
+        // 方向键控制选择选项，以及delete建删除
+        entityDir.setRenderer(new LabelCellRenderer<>(mapperDir));
+        mapperDir.setRenderer(new LabelCellRenderer<>(mapperDir));
+        daoDir.setRenderer(new LabelCellRenderer<>(mapperDir));
+        serviceDir.setRenderer(new LabelCellRenderer<>(mapperDir));
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -103,6 +132,7 @@ public class CodeDialog extends JDialog {
         // call onCancel() on ESCAPE
         contentPane.registerKeyboardAction(e -> onCancel(), KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
     }
+
     private void onAppend() {
         serviceLabel.setVisible(false);
         serviceDir.setVisible(false);
@@ -121,28 +151,60 @@ public class CodeDialog extends JDialog {
         daoDirBtn.setVisible(true);
     }
 
+    private void setComboBoxItems(JComboBox<String> comboBox, Set<String> items) {
+        if (CollectionUtils.isNotEmpty(items)) {
+            for (String item : items) {
+                comboBox.addItem(item);
+            }
+        }
+    }
+
     // 选择目录
-    private void chooseDir(JTextField jTextField) {
+    private void chooseDir(JComboBox<String> jComboBox) {
         FileChooserDescriptor descriptor = new FileChooserDescriptor(false, true, false, false, false, false);
         VirtualFile virtualFile = FileChooser.chooseFile(descriptor, project, null);
         if (Objects.nonNull(virtualFile)) {
             final String path = virtualFile.getPath();
-            jTextField.setText(path);
+            // 不存在item才新增
+            boolean existsItem = false;
+            for (int i = 0; i < jComboBox.getItemCount(); i++) {
+                String existsPath = jComboBox.getItemAt(i);
+                if (existsPath.equals(path)) {
+                    existsItem = true;
+                    break;
+                }
+            }
+            if (!existsItem) {
+                jComboBox.addItem(path);
+            }
+            jComboBox.setSelectedItem(path);
         }
 
     }
 
-    private void onOK() {
+    private void confirmOnOK() {
+        String sql = editTP.getText().trim();
+        if (checkAndCache(sql)) {
+            return;
+        }
+        ConfirmDialog confirmDialog = new ConfirmDialog(this);
+        confirmDialog.setSize(600, 300);
+        confirmDialog.setLocationRelativeTo(null);
+        confirmDialog.setVisible(true);
+    }
+
+    // 二次确认才提交
+    public void onOK() {
         try {
-            // add your code here
             this.setAlwaysOnTop(false);
+            // 保存配置
+            Cache.getInstant().save();
+
+            // 开始生成
             String sql = editTP.getText().trim();
-            if (checkAndCache(sql)) {
-                return;
-            }
             Map<String, String> entityMap = RegexUtils.parseOriginSql(sql);
-            if (Objects.isNull(entityMap) || entityMap.isEmpty()) {
-                Toast.make(project, editPanel, MessageType.ERROR, "sql code maybe not a real sql statement");
+            if (entityMap.isEmpty()) {
+                Toast.make(project, editPanel, MessageType.ERROR, "sql无法解析，请检查重试");
                 return;
             }
             // 生成文件
@@ -170,7 +232,7 @@ public class CodeDialog extends JDialog {
             Messages.showMessageDialog(project, "generate successful!", "SuccessMessage", Messages.getInformationIcon());
             dispose();
         } catch (Exception e) {
-            Messages.showErrorDialog(project,"unknown error! we clear the cache and config, please retry.","未知错误");
+            Messages.showErrorDialog(project,"未知错误! 可能是路径权限或者路径不正确,已清除缓存路径,请检查重试.","未知错误");
             reset();
         }
     }
@@ -187,16 +249,26 @@ public class CodeDialog extends JDialog {
             Toast.make(project, editPanel, MessageType.ERROR, "sql code maybe not empty");
             return true;
         }
-        if (TextUtils.isEmpty(entityDir.getText())) {
+        if (TextUtils.isEmpty((String) entityDir.getSelectedItem())) {
             Toast.make(project, entityDir, MessageType.ERROR, "entity dir maybe not empty");
             return true;
         }
         // cache paths
-        Cache.getInstant().setServicePath(serviceDir.getText());
-        Cache.getInstant().setDaoPath(daoDir.getText());
-        Cache.getInstant().setEntityPath(entityDir.getText());
-        Cache.getInstant().setMapperPath(mapperDir.getText());
-        Cache.getInstant().save();
+        String servicePath = (String) serviceDir.getSelectedItem();
+        Cache.getInstant().setServicePath(servicePath);
+        String daoPath = (String) daoDir.getSelectedItem();
+        Cache.getInstant().setDaoPath(daoPath);
+        String entityPath = (String) entityDir.getSelectedItem();
+        Cache.getInstant().setEntityPath(entityPath);
+        String mapperPath = (String) mapperDir.getSelectedItem();
+        Cache.getInstant().setMapperPath(mapperPath);
+
+        // item cache
+        Cache.getInstant().addServicePathItem(servicePath);
+        Cache.getInstant().addDaoPathItem(daoPath);
+        Cache.getInstant().addEntityPathItem(entityPath);
+        Cache.getInstant().addMapperPathItem(mapperPath);
+
         return false;
     }
 
@@ -208,4 +280,7 @@ public class CodeDialog extends JDialog {
         this.project = project;
     }
 
+    private void createUIComponents() {
+        // TODO: place custom component creation code here
+    }
 }

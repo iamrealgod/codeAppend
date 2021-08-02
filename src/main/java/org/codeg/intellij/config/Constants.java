@@ -3,12 +3,11 @@ package org.codeg.intellij.config;
 import java.util.regex.Pattern;
 
 /**
- *
  * @author liufei
  * @date 2018/12/28 10:44
  */
 public class Constants {
-    public static final  Pattern TABLE_REGEX = Pattern.compile("CREATE TABLE `(.*?)` \\((.*?)(PRIMARY|ENGINE)");
+    public static final Pattern TABLE_REGEX = Pattern.compile("CREATE TABLE `(.*?)` \\((.*?)(PRIMARY|ENGINE)");
     public static final Pattern FIELD_REGEX = Pattern.compile("`(.+?)` (.+?) .*?('(.*?)')?,");
     public static final Pattern APPEND_ENTITY_FIELD_REGEX = Pattern.compile("private .*? (.*?;.*)");
     public static final Pattern APPEND_MAPPER_RESULT_REGEX = Pattern.compile("<resultMap [\\s\\S]*?</resultMap>");
@@ -39,6 +38,7 @@ public class Constants {
     public static final CharSequence MYBATIS_BIGINT = "bigint";
     public static final CharSequence MYBATIS_INT = "int";
     public static final CharSequence MYBATIS_DATETIME = "datetime";
+    public static final CharSequence MYBATIS_TIMESTAMP = "timestamp";
     public static final CharSequence MYBATIS_DECIMAL = "decimal";
     public static final CharSequence MYBATIS_TEXT = "text";
     public static final CharSequence MYBATIS_DOUBLE = "double";
@@ -52,12 +52,12 @@ public class Constants {
             + "import com.baomidou.mybatisplus.annotation.TableName;\n"
             + "import com.baomidou.mybatisplus.annotation.IdType;\n"
             + "{lombokImport}" + "\n"
-            + "import java.util.Date;\n" + "import java.math.BigDecimal;\n"
+            + "import java.util.Date;\n" + "import java.time.LocalDateTime;\n" + "import java.math.BigDecimal;\n"
             + "\n" + "{lombokData}" + "@TableName(\"{tableName}\")\n"
             + "public class {className} {\n" + "{fields}\n}";
     public static final String entityStr_without_column = "package {entityPackage};\n" + "\n"
             + "{lombokImport}" + "\n"
-            + "import java.util.Date;\n"+ "import java.math.BigDecimal;\n"
+            + "import java.util.Date;\n" + "import java.time.LocalDateTime;\n" + "import java.math.BigDecimal;\n"
             + "\n" + "{lombokData}"
             + "public class {className} {\n" + "{fields}\n}";
 

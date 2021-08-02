@@ -1,9 +1,14 @@
 package org.codeg.intellij.config;
 
+import com.intellij.openapi.components.PersistentStateComponent;
 import org.codeg.intellij.util.StringUtils;
 import com.intellij.ide.util.PropertiesComponent;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
  *
@@ -21,6 +26,11 @@ public class Cache {
     private String entityPackage;
     private String mapperPath;
 
+    private Set<String> mapperPathItem;
+    private Set<String> entityPathItem;
+    private Set<String> daoPathItem;
+    private Set<String> servicePathItem;
+
     public void save() {
         PropertiesComponent.getInstance().setValue("servicePath", "" + servicePath);
         PropertiesComponent.getInstance().setValue("servicePackage", "" + servicePackage);
@@ -29,6 +39,11 @@ public class Cache {
         PropertiesComponent.getInstance().setValue("entityPath", "" + entityPath);
         PropertiesComponent.getInstance().setValue("entityPackage", "" + entityPackage);
         PropertiesComponent.getInstance().setValue("mapperPath", "" + mapperPath);
+
+        PropertiesComponent.getInstance().setValue("mapperPathItem", StringUtils.join(mapperPathItem, ","));
+        PropertiesComponent.getInstance().setValue("entityPathItem", StringUtils.join(entityPathItem, ","));
+        PropertiesComponent.getInstance().setValue("daoPathItem", StringUtils.join(daoPathItem, ","));
+        PropertiesComponent.getInstance().setValue("servicePathItem", StringUtils.join(servicePathItem, ","));
     }
 
     public static Cache getInstant() {
@@ -41,6 +56,12 @@ public class Cache {
             cache.setEntityPath(PropertiesComponent.getInstance().getValue("entityPath", StringUtils.EMPTY));
             cache.setEntityPackage(PropertiesComponent.getInstance().getValue("entityPackage"));
             cache.setMapperPath(PropertiesComponent.getInstance().getValue("mapperPath", StringUtils.EMPTY));
+
+
+            cache.addMapperPathItem(PropertiesComponent.getInstance().getValue("mapperPathItem", StringUtils.EMPTY).split(","));
+            cache.addEntityPathItem(PropertiesComponent.getInstance().getValue("entityPathItem", StringUtils.EMPTY).split(","));
+            cache.addDaoPathItem(PropertiesComponent.getInstance().getValue("daoPathItem", StringUtils.EMPTY).split(","));
+            cache.addServicePathItem(PropertiesComponent.getInstance().getValue("servicePathItem", StringUtils.EMPTY).split(","));
         }
         return cache;
     }
@@ -116,5 +137,50 @@ public class Cache {
 
     public void setMapperPath(String mapperPath) {
         this.mapperPath = mapperPath;
+    }
+
+    public Set<String> getMapperPathItem() {
+        return mapperPathItem;
+    }
+
+    public Set<String> getEntityPathItem() {
+        return entityPathItem;
+    }
+
+    public Set<String> getDaoPathItem() {
+        return daoPathItem;
+    }
+
+    public Set<String> getServicePathItem() {
+        return servicePathItem;
+    }
+
+    public void addMapperPathItem(String... items) {
+        if (Objects.isNull(mapperPathItem)) {
+            mapperPathItem = new HashSet<>();
+        }
+        mapperPathItem.addAll(Arrays.stream(items).filter(StringUtils::isNotBlank).collect(Collectors.toSet()));
+
+    }
+
+    public void addEntityPathItem(String... items) {
+        if (Objects.isNull(entityPathItem)) {
+            entityPathItem = new HashSet<>();
+        }
+        entityPathItem.addAll(Arrays.stream(items).filter(StringUtils::isNotBlank).collect(Collectors.toSet()));
+    }
+
+    public void addDaoPathItem(String... items) {
+        if (Objects.isNull(daoPathItem)) {
+            daoPathItem = new HashSet<>();
+        }
+        daoPathItem.addAll(Arrays.stream(items).filter(StringUtils::isNotBlank).collect(Collectors.toSet()));
+    }
+
+    public void addServicePathItem(String... items) {
+        if (Objects.isNull(servicePathItem)) {
+            servicePathItem = new HashSet<>();
+        }
+        servicePathItem.addAll(Arrays.stream(items).filter(StringUtils::isNotBlank).collect(Collectors.toSet()));
     }
 }

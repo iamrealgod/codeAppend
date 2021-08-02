@@ -25,12 +25,12 @@ public class EntityBuilder {
      * @return
      */
     public static void buildEntityFile(ClassEntity classEntity, List<FieldEntity> fieldEntities) {
-        String content = buildEntityStr(classEntity, fieldEntities, Config.getInstant().getColumnChk(),Config.getInstant().getAppendType());
+        String content = buildEntityStr(classEntity, fieldEntities, Config.getInstant().getColumnChk(), Config.getInstant().getAppendType(), Config.getInstant().isBuilderChk());
         final String javaFilePath = StringUtils.getEntityFilePath(Cache.getInstant().getEntityPath(), classEntity.getClassName());
         FileUtils.createFile(javaFilePath, content);
     }
 
-    public static String buildEntityStr(ClassEntity classEntity, List<FieldEntity> fieldEntities, boolean columnChk, String appendType) {
+    public static String buildEntityStr(ClassEntity classEntity, List<FieldEntity> fieldEntities, boolean columnChk, String appendType, boolean builderChk) {
         // 字段处理
         StringBuilder fields = new StringBuilder();
         StringBuilder methods = new StringBuilder(StringUtils.EMPTY);
@@ -56,8 +56,8 @@ public class EntityBuilder {
         // 类处理
         String content;
         fields.append(isLombok(appendType) ? StringUtils.EMPTY : methods.toString());
-        String lombokData = isLombok(appendType) ? "@Data\n" : StringUtils.EMPTY;
-        String lombokImport = isLombok(appendType) ? "import lombok.Data;\n" : StringUtils.EMPTY;
+        String lombokData = isLombok(appendType) ? "@Data\n" + getBuilder(builderChk) : StringUtils.EMPTY;
+        String lombokImport = isLombok(appendType) ? "import lombok.Data;\n" + getBuilderImport(builderChk): StringUtils.EMPTY;
         content = columnChk ? Constants.entityStr : Constants.entityStr_without_column;
         content = content.replaceAll("\\{entityPackage}", Cache.getInstant().getEntityPackage())
                 .replaceAll("\\{tableName}", classEntity.getTableName())
@@ -67,6 +67,18 @@ public class EntityBuilder {
                 .replaceAll("\\{lombokImport}", lombokImport)
                 .replaceAll("\\{className}", classEntity.getClassName());
         return content;
+    }
+
+    private static String getBuilderImport(boolean builderChk) {
+        return builderChk ? "import lombok.Builder;\n" +
+                "import lombok.AllArgsConstructor;\n" +
+                "import lombok.NoArgsConstructor;\n" : StringUtils.EMPTY;
+    }
+
+    private static String getBuilder(boolean builderChk) {
+        return builderChk ? "@Builder\n" +
+                "@AllArgsConstructor\n" +
+                "@NoArgsConstructor\n" : StringUtils.EMPTY;
     }
 
     private static boolean isLombok(String appendType) {
@@ -115,11 +127,11 @@ public class EntityBuilder {
 
     private static String getPropertyStr(String property) {
         String first = property.substring(0, 1);
-        return "get" + first.toUpperCase() + property.substring(1, property.length());
+        return "get" + first.toUpperCase() + property.substring(1);
     }
 
     public static String setPropertyStr(String property) {
         String first = property.substring(0, 1);
-        return "set" + first.toUpperCase() + property.substring(1, property.length());
+        return "set" + first.toUpperCase() + property.substring(1);
     }
 }

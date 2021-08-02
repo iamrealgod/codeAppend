@@ -38,6 +38,7 @@
     <!-- Add your actions here -->
     <action id="codeAppend" class="org.codeg.intellij.MainAction" text="Code Append">
       <add-to-group group-id="FileMenu" anchor="last"/>
+      <keyboard-shortcut first-keystroke="ctrl alt C" keymap="$default"/>
     </action>
   </actions>
 

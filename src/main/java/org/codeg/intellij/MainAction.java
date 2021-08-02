@@ -17,10 +17,11 @@ public class MainAction extends AnAction implements DumbAware{
     @Override
     public void actionPerformed(AnActionEvent e) {
         Project project = e.getData(PlatformDataKeys.PROJECT);
-        CodeDialog jsonD = new CodeDialog(project);
-        jsonD.setProject(project);
-        jsonD.setSize(600, 600);
-        jsonD.setLocationRelativeTo(null);
-        jsonD.setVisible(true);
+        CodeDialog dialog = new CodeDialog(project);
+        dialog.setProject(project);
+        dialog.setSize(600, 600);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }
+
 }

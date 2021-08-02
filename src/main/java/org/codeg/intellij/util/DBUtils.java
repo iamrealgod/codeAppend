@@ -1,5 +1,6 @@
 package org.codeg.intellij.util;
 
+import org.codeg.intellij.config.Config;
 import org.codeg.intellij.config.Constants;
 import org.codeg.intellij.entity.ClassEntity;
 import org.codeg.intellij.entity.FieldEntity;
@@ -69,7 +70,10 @@ public class DBUtils {
             return "String";
         }
         if (columnType.contains(Constants.MYBATIS_DATETIME)) {
-            return "Date";
+            return Config.getInstant().isDateChk() ? "LocalDateTime" : "Date";
+        }
+        if (columnType.contains(Constants.MYBATIS_TIMESTAMP)) {
+            return Config.getInstant().isDateChk() ? "LocalDateTime" : "Date";
         }
         if (columnType.contains(Constants.MYBATIS_DECIMAL)) {
             return "BigDecimal";

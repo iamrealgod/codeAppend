@@ -24,13 +24,12 @@ public class ExampleBuilder {
             + "  KEY `idx_create_time` (`create_time`) USING BTREE\n"
             + ") ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='example table';";
 
-    public static String buildExampleEntityContent(boolean columnChk, String appendType, String tbPrefixType, String tbPrefix, String fdPrefixType, String fdPrefix) {
+    public static String buildExampleEntityContent(boolean columnChk, String appendType, String tbPrefixType, String tbPrefix, String fdPrefixType, String fdPrefix, boolean builderChk) {
         Map<String, String> entityMap = RegexUtils.parseOriginSql(SQL);
         for (String key : entityMap.keySet()) {
             final ClassEntity classEntity = DBUtils.getClassEntity(key, tbPrefixType, tbPrefix);
-            final List<FieldEntity> fieldEntities = DBUtils.getFieldEntities(entityMap.get(key), fdPrefixType,
-                    fdPrefix);
-            return EntityBuilder.buildEntityStr(classEntity, fieldEntities, columnChk, appendType);
+            final List<FieldEntity> fieldEntities = DBUtils.getFieldEntities(entityMap.get(key), fdPrefixType, fdPrefix);
+            return EntityBuilder.buildEntityStr(classEntity, fieldEntities, columnChk, appendType, builderChk);
         }
         return "";
     }

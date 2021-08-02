@@ -22,6 +22,8 @@ public class Config {
     private String fdPrefix;
     private boolean columnChk;
     private boolean mybatisPlusChk;
+    private boolean dateChk;
+    private boolean builderChk;
     private String mapperSuffix;
 
     public void save() {
@@ -33,6 +35,8 @@ public class Config {
         PropertiesComponent.getInstance().setValue("columnChk", columnChk);
         PropertiesComponent.getInstance().setValue("mybatisPlusChk", mybatisPlusChk);
         PropertiesComponent.getInstance().setValue("mapperSuffix", mapperSuffix);
+        PropertiesComponent.getInstance().setValue("dateChk", dateChk);
+        PropertiesComponent.getInstance().setValue("builderChk", builderChk);
     }
 
     public static Config getInstant() {
@@ -45,6 +49,8 @@ public class Config {
             config.setFdPrefix(PropertiesComponent.getInstance().getValue("fdPrefix", StringUtils.EMPTY));
             config.setColumnChk(PropertiesComponent.getInstance().getBoolean("columnChk", true));
             config.setMybatisPlusChk(PropertiesComponent.getInstance().getBoolean("mybatisPlusChk", true));
+            config.setMybatisPlusChk(PropertiesComponent.getInstance().getBoolean("dateChk", false));
+            config.setMybatisPlusChk(PropertiesComponent.getInstance().getBoolean("builderChk", false));
             config.setMapperSuffix(PropertiesComponent.getInstance().getValue("mapperSuffix", Constants.MAPPER_NAME));
         }
         return config;
@@ -61,6 +67,8 @@ public class Config {
         config.setFdPrefix(StringUtils.EMPTY);
         config.setColumnChk(true);
         config.setMybatisPlusChk(true);
+        config.setDateChk(false);
+        config.setBuilderChk(false);
         config.setMapperSuffix(Constants.MAPPER_NAME);
         config.save();
     }
@@ -127,5 +135,22 @@ public class Config {
 
     public void setColumnChk(boolean columnChk) {
         this.columnChk = columnChk;
+    }
+
+
+    public boolean isDateChk() {
+        return dateChk;
+    }
+
+    public void setDateChk(boolean dateChk) {
+        this.dateChk = dateChk;
+    }
+
+    public boolean isBuilderChk() {
+        return builderChk;
+    }
+
+    public void setBuilderChk(boolean builderChk) {
+        this.builderChk = builderChk;
     }
 }

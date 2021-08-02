@@ -39,6 +39,8 @@ public class SettingDialog extends JDialog {
     private JTextField mapperSuffix;
     private JLabel exampleClassName;
     private JLabel exampleMapperName;
+    private JCheckBox dateChkBtn;
+    private JCheckBox builderChkBtn;
 
     public SettingDialog(Project project) {
         this.project = project;
@@ -71,9 +73,11 @@ public class SettingDialog extends JDialog {
             tbPrefix.setText(Config.getInstant().getTbPrefix());
             fdPrefix.setText(Config.getInstant().getFdPrefix());
             mapperSuffix.setText(Config.getInstant().getMapperSuffix());
+            dateChkBtn.setSelected(Config.getInstant().isDateChk());
+            builderChkBtn.setSelected(Config.getInstant().isBuilderChk());
             initExample();
         } catch (Exception e) {
-            Messages.showErrorDialog(project,"unknown error! we clear the cache and config, please retry.","未知错误");
+            Messages.showErrorDialog(project,"初始化配置出错! 已重置配置项,重试看看.","初始化配置出错");
             reset();
         }
     }
@@ -85,7 +89,7 @@ public class SettingDialog extends JDialog {
         String fdPrefixType = fdPrefixDelCustomRbtn.isSelected() ? PrefixType.OTHER.name() : (fdPrefixDelRbtn.isSelected() ? PrefixType.DEL.name() : PrefixType.STET.name());
         String fdPrefixStr = fdPrefixDelCustomRbtn.isSelected() && StringUtils.isNotBlank(fdPrefix.getText()) ? fdPrefix.getText() : "pre";
         String mapperSuffixStr = Objects.isNull(mapperSuffix.getText()) ? StringUtils.EMPTY : mapperSuffix.getText();
-        entityExample.setText(ExampleBuilder.buildExampleEntityContent(columnChkBtn.isSelected(), appendType, tbPrefixType, tbPrefixStr, fdPrefixType, fdPrefixStr));
+        entityExample.setText(ExampleBuilder.buildExampleEntityContent(columnChkBtn.isSelected(), appendType, tbPrefixType, tbPrefixStr, fdPrefixType, fdPrefixStr, builderChkBtn.isSelected()));
         mapperExample.setText(ExampleBuilder.buildExampleMapperContent(tbPrefixType, tbPrefixStr, fdPrefixType, fdPrefixStr));
         exampleClassName.setText(ExampleBuilder.buildExampleEntityName(tbPrefixType, tbPrefixStr));
         exampleMapperName.setText(ExampleBuilder.buildExampleMapperName(tbPrefixType, tbPrefixStr, mapperSuffixStr));
@@ -112,21 +116,9 @@ public class SettingDialog extends JDialog {
                 initExample();
             }
         });
-        tbPrefix.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                initExample();
-            }
-        });
         fdPrefix.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
-                initExample();
-            }
-        });
-        fdPrefix.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
                 initExample();
             }
         });
@@ -136,12 +128,8 @@ public class SettingDialog extends JDialog {
                 initExample();
             }
         });
-        mapperSuffix.addKeyListener(new KeyAdapter() {
-            @Override
-            public void keyReleased(KeyEvent e) {
-                initExample();
-            }
-        });
+        dateChkBtn.addActionListener(e -> initExample());
+        builderChkBtn.addActionListener(e -> initExample());
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -170,7 +158,7 @@ public class SettingDialog extends JDialog {
                 Config.getInstant().setTbPrefixType(PrefixType.STET.name());
             } else {
                 if (StringUtils.isBlank(tbPrefix.getText())) {
-                    Toast.make(project, tbPrefix, MessageType.ERROR, "this value maybe not empty!");
+                    Toast.make(project, tbPrefix, MessageType.ERROR, "这个不能为空!");
                     return;
                 }
                 Config.getInstant().setTbPrefixType(PrefixType.OTHER.name());
@@ -183,7 +171,7 @@ public class SettingDialog extends JDialog {
                 Config.getInstant().setFdPrefixType(PrefixType.STET.name());
             } else {
                 if (StringUtils.isBlank(fdPrefix.getText())) {
-                    Toast.make(project, fdPrefix, MessageType.ERROR, "this value maybe not empty!");
+                    Toast.make(project, fdPrefix, MessageType.ERROR, "这个不能为空!");
                     return;
                 }
                 Config.getInstant().setFdPrefixType(PrefixType.OTHER.name());
@@ -192,12 +180,14 @@ public class SettingDialog extends JDialog {
             // tableField
             Config.getInstant().setColumnChk(columnChkBtn.isSelected());
             Config.getInstant().setMybatisPlusChk(mybatisPlusCheckBox.isSelected());
+            Config.getInstant().setDateChk(dateChkBtn.isSelected());
+            Config.getInstant().setBuilderChk(builderChkBtn.isSelected());
             Config.getInstant().setMapperSuffix(Objects.isNull(mapperSuffix.getText()) ? StringUtils.EMPTY : mapperSuffix.getText());
 
             Config.getInstant().save();
             dispose();
         } catch (Exception e) {
-            Messages.showErrorDialog(project,"unknown error! we clear the cache and config, please retry.","未知错误");
+            Messages.showErrorDialog(project,"保存配置出错! 已重置配置, 重试看看.","保存配置出错");
             reset();
         }
     }
@@ -207,10 +197,4 @@ public class SettingDialog extends JDialog {
         dispose();
     }
 
-    public static void main(String[] args) {
-        SettingDialog dialog = new SettingDialog(null);
-        dialog.pack();
-        dialog.setVisible(true);
-        System.exit(0);
-    }
 }
