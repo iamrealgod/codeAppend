@@ -280,7 +280,4 @@ public class CodeDialog extends JDialog {
         this.project = project;
     }
 
-    private void createUIComponents() {
-        // TODO: place custom component creation code here
-    }
 }
