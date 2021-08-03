@@ -7,14 +7,15 @@ import org.codeg.intellij.config.Enums.PrefixType;
 import java.util.Objects;
 
 /**
- *
  * @author liufei
  * @date 2018/12/28 18:10
  */
-public class StringUtils extends org.apache.commons.lang.StringUtils{
+public class StringUtils extends org.apache.commons.lang.StringUtils {
     public static final String EMPTY = "";
+
     /**
      * 获取路径包含src的package
+     *
      * @param path
      * @return
      */
@@ -39,6 +40,7 @@ public class StringUtils extends org.apache.commons.lang.StringUtils{
 
     /**
      * 处理前缀（表名/字段）
+     *
      * @param value
      * @return
      */
@@ -92,7 +94,7 @@ public class StringUtils extends org.apache.commons.lang.StringUtils{
     }
 
     public static String mapperColumn(String column) {
-        return "column=\""+column+"\"";
+        return "column=\"" + column + "\"";
     }
 
 }

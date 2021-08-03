@@ -1,6 +1,5 @@
 package org.codeg.intellij.config;
 
-import com.intellij.openapi.components.PersistentStateComponent;
 import org.codeg.intellij.util.StringUtils;
 import com.intellij.ide.util.PropertiesComponent;
 

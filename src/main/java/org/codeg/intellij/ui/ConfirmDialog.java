@@ -5,9 +5,6 @@ import com.intellij.openapi.ui.Messages;
 import org.codeg.intellij.config.Cache;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicHTML;
-import javax.swing.text.View;
-import java.awt.*;
 import java.awt.event.*;
 
 public class ConfirmDialog extends JDialog {
