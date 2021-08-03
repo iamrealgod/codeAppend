@@ -41,6 +41,8 @@
     <!-- Add your extensions here -->
   </extensions>
 
+  <depends>com.intellij.modules.lang</depends>
+
   <actions>
     <!-- Add your actions here -->
     <action id="codeAppend" class="org.codeg.intellij.MainAction" text="Code Append">
