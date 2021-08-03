@@ -22,6 +22,9 @@ Restart IDE.
 - [x] 支持配置是否生成mybatis-plus格式代码
 - [x] 配置变动实时预览
 - [x] 支持自定义Mapper文件后缀
+- [x] 增加每项配置tips说明
+- [x] 增加保存目录历史记录
+- [x] 支持配置使用Lombok的@builder
 
 ### 使用说明
 #### append方式使用说明（method of application）：
@@ -116,3 +119,11 @@ CREATE TABLE `pre_test2` (
 > * v1.0.8
 > * bug fix.
 
+> * v2.0.0
+> * 更改路径输入框为下拉框，并且缓存历史记录
+> * 增加二次弹窗确认路径操作，防止不小心点错的问题
+> * 增加配置支持 LocalDateTime
+> * 增加配置Lombok @Builder链式注解
+> * 界面说明全面改成中文
+> * 增加选项说明
+> * 增加快捷键 ctrl+alt+C
