@@ -51,13 +51,13 @@ public class Constants {
             + "import com.baomidou.mybatisplus.annotation.TableId;\n"
             + "import com.baomidou.mybatisplus.annotation.TableName;\n"
             + "import com.baomidou.mybatisplus.annotation.IdType;\n"
-            + "{lombokImport}" + "\n"
-            + "import java.util.Date;\n" + "import java.time.LocalDateTime;\n" + "import java.math.BigDecimal;\n"
+            + "{lombokImport}"
+            + "{fieldImport}"
             + "\n" + "{lombokData}" + "@TableName(\"{tableName}\")\n"
             + "public class {className} {\n" + "{fields}\n}";
     public static final String entityStr_without_column = "package {entityPackage};\n" + "\n"
-            + "{lombokImport}" + "\n"
-            + "import java.util.Date;\n" + "import java.time.LocalDateTime;\n" + "import java.math.BigDecimal;\n"
+            + "{lombokImport}"
+            + "{fieldImport}"
             + "\n" + "{lombokData}"
             + "public class {className} {\n" + "{fields}\n}";
 

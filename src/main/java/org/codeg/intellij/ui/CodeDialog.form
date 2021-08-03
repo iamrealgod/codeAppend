@@ -82,7 +82,7 @@
           <gridbag weightx="1.0" weighty="8.0"/>
         </constraints>
         <properties/>
-        <border type="none" title="表创建语句sql（尽可能给包含主键的sql,识别度更高）"/>
+        <border type="none" title="MySql建表语句(需要包含Primary key,否则可能生成出错!支持批量输入建表语句,或者直接拷贝建库语句;)"/>
         <children>
           <scrollpane id="4472d">
             <constraints>
@@ -99,14 +99,14 @@
                 <constraints/>
                 <properties>
                   <lineWrap value="true"/>
-                  <toolTipText value="sql with PRIMARY KEY, or generate code maybe wrong"/>
+                  <toolTipText value="Sql尽可能包含主键（PRIMARY KEY）,否则生成数据可能不正确"/>
                 </properties>
               </component>
             </children>
           </scrollpane>
         </children>
       </grid>
-      <grid id="dcaeb" layout-manager="GridLayoutManager" row-count="1" column-count="2" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+      <grid id="dcaeb" layout-manager="GridLayoutManager" row-count="1" column-count="3" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
         <margin top="0" left="6" bottom="0" right="0"/>
         <constraints>
           <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="9" fill="0" indent="0" use-parent-layout="false">
@@ -119,24 +119,34 @@
         <children>
           <component id="724cd" class="javax.swing.JRadioButton" binding="overrideRBtn">
             <constraints>
-              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="4" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="4" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="83" height="46"/>
               </grid>
             </constraints>
             <properties>
               <selected value="false"/>
-              <text value="覆盖"/>
+              <text value="覆盖 ?"/>
+              <toolTipText value="生成新的类文件,覆盖原来的类文件,不存在则新建"/>
             </properties>
           </component>
           <component id="63af7" class="javax.swing.JRadioButton" binding="appendRBtn">
             <constraints>
-              <grid row="0" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
+              <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false">
                 <preferred-size width="78" height="46"/>
               </grid>
             </constraints>
             <properties>
               <selected value="true"/>
-              <text value="追加"/>
+              <text value="追加 ?"/>
+              <toolTipText value="在实体类和Mapper文件最后追加不存在的Sql字段"/>
+            </properties>
+          </component>
+          <component id="ee782" class="javax.swing.JLabel" binding="appendType">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties>
+              <text value="使用方式"/>
             </properties>
           </component>
         </children>
@@ -194,7 +204,8 @@
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="entity路径:"/>
+                  <foreground color="-4506053"/>
+                  <text value="* entity路径:"/>
                 </properties>
               </component>
             </children>

@@ -1,5 +1,7 @@
 package org.codeg.intellij.ui;
 
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.ui.Messages;
 import org.codeg.intellij.config.Cache;
 
 import javax.swing.*;
@@ -13,16 +15,25 @@ public class ConfirmDialog extends JDialog {
     private JButton buttonOK;
     private JButton buttonCancel;
     private JTextArea pathLabel;
+    private Project project;
 
     private CodeDialog codeDialog;
 
-    public ConfirmDialog(CodeDialog codeDialog) {
+    public ConfirmDialog(CodeDialog codeDialog, Project project, Boolean appendType) {
         this.codeDialog = codeDialog;
+        this.project = project;
 
-        String showLabelStr = "entityPath:" + Cache.getInstant().getEntityPath() + "\n\n" +
-                "mapperPath:" + Cache.getInstant().getMapperPath() + "\n\n" +
-                "servicePath:" + Cache.getInstant().getServicePath() + "\n\n" +
-                "daoPath:" + Cache.getInstant().getDaoPath();
+        String showLabelStr;
+        if (appendType) {
+            showLabelStr = "entity路径:" + Cache.getInstant().getEntityPath() + "\n\n" +
+                    "mapper路径:" + Cache.getInstant().getMapperPath();
+        } else {
+            showLabelStr = "entity路径:" + Cache.getInstant().getEntityPath() + "\n\n" +
+                    "mapper路径:" + Cache.getInstant().getMapperPath() + "\n\n" +
+                    "service路径:" + Cache.getInstant().getServicePath() + "\n\n" +
+                    "dao路径:" + Cache.getInstant().getDaoPath();
+        }
+
         pathLabel.append(showLabelStr);
 
         setContentPane(contentPane);
@@ -46,6 +57,7 @@ public class ConfirmDialog extends JDialog {
         // add your code here
         codeDialog.onOK();
         dispose();
+        Messages.showMessageDialog(project, "generate successful!", "SuccessMessage", Messages.getInformationIcon());
     }
 
     private void onCancel() {

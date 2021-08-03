@@ -21,7 +21,7 @@ public class DBUtils {
      */
     public static String toClassName(String tableName) {
         if (tableName.startsWith(Constants.UNDER_LINE)) {
-            tableName = tableName.substring(1, tableName.length());
+            tableName = tableName.substring(1);
         }
         final String[] split = tableName.split(Constants.UNDER_LINE);
         for (int i = 0; i < split.length; i++) {
@@ -50,7 +50,7 @@ public class DBUtils {
      * @param columnType
      * @return
      */
-    public static String toPropertyType(String columnType) {
+    public static String toPropertyType(String columnType, boolean localDate) {
         if (columnType.contains(Constants.MYBATIS_TINYINT)) {
             return "Integer";
         }
@@ -70,10 +70,10 @@ public class DBUtils {
             return "String";
         }
         if (columnType.contains(Constants.MYBATIS_DATETIME)) {
-            return Config.getInstant().isDateChk() ? "LocalDateTime" : "Date";
+            return localDate ? "LocalDateTime" : "Date";
         }
         if (columnType.contains(Constants.MYBATIS_TIMESTAMP)) {
-            return Config.getInstant().isDateChk() ? "LocalDateTime" : "Date";
+            return localDate ? "LocalDateTime" : "Date";
         }
         if (columnType.contains(Constants.MYBATIS_DECIMAL)) {
             return "BigDecimal";
@@ -94,7 +94,11 @@ public class DBUtils {
         return entity;
     }
 
+    public static List<FieldEntity> getFieldEntities(String fieldSql, String fdPrefixType, String fdPrefix, boolean localDate) {
+        return RegexUtils.parseFieldSql(fieldSql, fdPrefixType, fdPrefix, localDate);
+    }
+
     public static List<FieldEntity> getFieldEntities(String fieldSql, String fdPrefixType, String fdPrefix) {
-        return RegexUtils.parseFieldSql(fieldSql, fdPrefixType, fdPrefix);
+        return RegexUtils.parseFieldSql(fieldSql, fdPrefixType, fdPrefix, false);
     }
 }

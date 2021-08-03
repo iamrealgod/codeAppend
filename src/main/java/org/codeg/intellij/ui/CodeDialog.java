@@ -56,6 +56,7 @@ public class CodeDialog extends JDialog {
     private JComboBox<String> daoDir;
     private JLabel entityLabel;
     private JLabel mapperLabel;
+    private JLabel appendType;
     private Project project;
 
     public CodeDialog(Project project) {
@@ -187,7 +188,7 @@ public class CodeDialog extends JDialog {
         if (checkAndCache(sql)) {
             return;
         }
-        ConfirmDialog confirmDialog = new ConfirmDialog(this);
+        ConfirmDialog confirmDialog = new ConfirmDialog(this, project, appendRBtn.isSelected());
         confirmDialog.setSize(600, 300);
         confirmDialog.setLocationRelativeTo(null);
         confirmDialog.setVisible(true);
@@ -212,7 +213,7 @@ public class CodeDialog extends JDialog {
                 final ClassEntity classEntity = DBUtils.getClassEntity(key, Config.getInstant().getTbPrefixType(),
                         Config.getInstant().getTbPrefix());
                 final List<FieldEntity> fieldEntities = DBUtils.getFieldEntities(entityMap.get(key),
-                        Config.getInstant().getFdPrefixType(), Config.getInstant().getFdPrefix());
+                        Config.getInstant().getFdPrefixType(), Config.getInstant().getFdPrefix(), Config.getInstant().isLocalDateChk());
                 if (appendRBtn.isSelected()) {
                     // 追加属性到实体文件
                     EntityBuilder.appendEntityFile(classEntity, fieldEntities);
@@ -229,7 +230,6 @@ public class CodeDialog extends JDialog {
                     DaoBuilder.buildDaoFile(classEntity);
                 }
             }
-            Messages.showMessageDialog(project, "generate successful!", "SuccessMessage", Messages.getInformationIcon());
             dispose();
         } catch (Exception e) {
             Messages.showErrorDialog(project,"未知错误! 可能是路径权限或者路径不正确,已清除缓存路径,请检查重试.","未知错误");
@@ -246,11 +246,11 @@ public class CodeDialog extends JDialog {
 
     private boolean checkAndCache(String sql) {
         if (TextUtils.isEmpty(sql)) {
-            Toast.make(project, editPanel, MessageType.ERROR, "sql code maybe not empty");
+            Toast.make(project, editPanel, MessageType.ERROR, "建表语句不能为空");
             return true;
         }
         if (TextUtils.isEmpty((String) entityDir.getSelectedItem())) {
-            Toast.make(project, entityDir, MessageType.ERROR, "entity dir maybe not empty");
+            Toast.make(project, entityDir, MessageType.ERROR, "实体类路径不能为空");
             return true;
         }
         // cache paths

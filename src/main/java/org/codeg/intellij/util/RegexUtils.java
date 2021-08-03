@@ -39,7 +39,7 @@ public class RegexUtils {
         return entityMap;
     }
 
-    public static List<FieldEntity> parseFieldSql(String sql, String fdPrefixType, String fdPrefix) {
+    public static List<FieldEntity> parseFieldSql(String sql, String fdPrefixType, String fdPrefix, boolean localDate) {
         // 查找表名和字段语句
         Matcher matcher = Constants.FIELD_REGEX.matcher(sql);
         List<FieldEntity> fieldEntities = new ArrayList<>();
@@ -59,7 +59,7 @@ public class RegexUtils {
             column = StringUtils.handlePrefix(column, fdPrefixType, fdPrefix);
             param.setProperty(DBUtils.toProperty(column));
             param.setColumnType(matcher.group(2));
-            param.setPropertyType(DBUtils.toPropertyType(param.getColumnType()));
+            param.setPropertyType(DBUtils.toPropertyType(param.getColumnType(), localDate));
             if (matcher.groupCount() >= 4) {
                 param.setComment(matcher.group(4));
             }

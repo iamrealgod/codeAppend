@@ -65,8 +65,23 @@ public class EntityBuilder {
                 .replaceAll("\\{fields}", fields.toString())
                 .replaceAll("\\{lombokData}", lombokData)
                 .replaceAll("\\{lombokImport}", lombokImport)
+                .replaceAll("\\{fieldImport}", getFieldImport(fieldEntities))
                 .replaceAll("\\{className}", classEntity.getClassName());
         return content;
+    }
+
+    private static String getFieldImport(List<FieldEntity> fieldEntities) {
+        String fieldImport = StringUtils.EMPTY;
+        if (fieldEntities.stream().anyMatch(fieldEntity -> fieldEntity.getPropertyType().equals("Date"))) {
+            fieldImport = fieldImport + "import java.util.Date;\n";
+        }
+        if (fieldEntities.stream().anyMatch(fieldEntity -> fieldEntity.getPropertyType().equals("LocalDateTime"))) {
+            fieldImport = fieldImport + "import java.time.LocalDateTime;\n";
+        }
+        if (fieldEntities.stream().anyMatch(fieldEntity -> fieldEntity.getPropertyType().equals("BigDecimal"))) {
+            fieldImport = fieldImport + "import java.math.BigDecimal;\n";
+        }
+        return fieldImport;
     }
 
     private static String getBuilderImport(boolean builderChk) {

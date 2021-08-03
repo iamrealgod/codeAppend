@@ -39,7 +39,7 @@ public class SettingDialog extends JDialog {
     private JTextField mapperSuffix;
     private JLabel exampleClassName;
     private JLabel exampleMapperName;
-    private JCheckBox dateChkBtn;
+    private JCheckBox localDateChkBtn;
     private JCheckBox builderChkBtn;
 
     public SettingDialog(Project project) {
@@ -73,7 +73,7 @@ public class SettingDialog extends JDialog {
             tbPrefix.setText(Config.getInstant().getTbPrefix());
             fdPrefix.setText(Config.getInstant().getFdPrefix());
             mapperSuffix.setText(Config.getInstant().getMapperSuffix());
-            dateChkBtn.setSelected(Config.getInstant().isDateChk());
+            localDateChkBtn.setSelected(Config.getInstant().isLocalDateChk());
             builderChkBtn.setSelected(Config.getInstant().isBuilderChk());
             initExample();
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class SettingDialog extends JDialog {
         String fdPrefixType = fdPrefixDelCustomRbtn.isSelected() ? PrefixType.OTHER.name() : (fdPrefixDelRbtn.isSelected() ? PrefixType.DEL.name() : PrefixType.STET.name());
         String fdPrefixStr = fdPrefixDelCustomRbtn.isSelected() && StringUtils.isNotBlank(fdPrefix.getText()) ? fdPrefix.getText() : "pre";
         String mapperSuffixStr = Objects.isNull(mapperSuffix.getText()) ? StringUtils.EMPTY : mapperSuffix.getText();
-        entityExample.setText(ExampleBuilder.buildExampleEntityContent(columnChkBtn.isSelected(), appendType, tbPrefixType, tbPrefixStr, fdPrefixType, fdPrefixStr, builderChkBtn.isSelected()));
+        entityExample.setText(ExampleBuilder.buildExampleEntityContent(columnChkBtn.isSelected(), appendType, tbPrefixType, tbPrefixStr, fdPrefixType, fdPrefixStr, builderChkBtn.isSelected(), localDateChkBtn.isSelected()));
         mapperExample.setText(ExampleBuilder.buildExampleMapperContent(tbPrefixType, tbPrefixStr, fdPrefixType, fdPrefixStr));
         exampleClassName.setText(ExampleBuilder.buildExampleEntityName(tbPrefixType, tbPrefixStr));
         exampleMapperName.setText(ExampleBuilder.buildExampleMapperName(tbPrefixType, tbPrefixStr, mapperSuffixStr));
@@ -112,23 +112,23 @@ public class SettingDialog extends JDialog {
         fdPrefixDelCustomRbtn.addActionListener(e -> initExample());
         tbPrefix.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) {
+            public void keyReleased(KeyEvent e) {
                 initExample();
             }
         });
         fdPrefix.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) {
+            public void keyReleased(KeyEvent e) {
                 initExample();
             }
         });
         mapperSuffix.addKeyListener(new KeyAdapter() {
             @Override
-            public void keyPressed(KeyEvent e) {
+            public void keyReleased(KeyEvent e) {
                 initExample();
             }
         });
-        dateChkBtn.addActionListener(e -> initExample());
+        localDateChkBtn.addActionListener(e -> initExample());
         builderChkBtn.addActionListener(e -> initExample());
 
         // call onCancel() when cross is clicked
@@ -180,7 +180,7 @@ public class SettingDialog extends JDialog {
             // tableField
             Config.getInstant().setColumnChk(columnChkBtn.isSelected());
             Config.getInstant().setMybatisPlusChk(mybatisPlusCheckBox.isSelected());
-            Config.getInstant().setDateChk(dateChkBtn.isSelected());
+            Config.getInstant().setLocalDateChk(localDateChkBtn.isSelected());
             Config.getInstant().setBuilderChk(builderChkBtn.isSelected());
             Config.getInstant().setMapperSuffix(Objects.isNull(mapperSuffix.getText()) ? StringUtils.EMPTY : mapperSuffix.getText());
 

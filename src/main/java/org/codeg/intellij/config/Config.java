@@ -22,7 +22,7 @@ public class Config {
     private String fdPrefix;
     private boolean columnChk;
     private boolean mybatisPlusChk;
-    private boolean dateChk;
+    private boolean localDateChk;
     private boolean builderChk;
     private String mapperSuffix;
 
@@ -35,7 +35,7 @@ public class Config {
         PropertiesComponent.getInstance().setValue("columnChk", columnChk);
         PropertiesComponent.getInstance().setValue("mybatisPlusChk", mybatisPlusChk);
         PropertiesComponent.getInstance().setValue("mapperSuffix", mapperSuffix);
-        PropertiesComponent.getInstance().setValue("dateChk", dateChk);
+        PropertiesComponent.getInstance().setValue("localDateChk", localDateChk);
         PropertiesComponent.getInstance().setValue("builderChk", builderChk);
     }
 
@@ -49,7 +49,7 @@ public class Config {
             config.setFdPrefix(PropertiesComponent.getInstance().getValue("fdPrefix", StringUtils.EMPTY));
             config.setColumnChk(PropertiesComponent.getInstance().getBoolean("columnChk", true));
             config.setMybatisPlusChk(PropertiesComponent.getInstance().getBoolean("mybatisPlusChk", true));
-            config.setMybatisPlusChk(PropertiesComponent.getInstance().getBoolean("dateChk", false));
+            config.setMybatisPlusChk(PropertiesComponent.getInstance().getBoolean("localDateChk", false));
             config.setMybatisPlusChk(PropertiesComponent.getInstance().getBoolean("builderChk", false));
             config.setMapperSuffix(PropertiesComponent.getInstance().getValue("mapperSuffix", Constants.MAPPER_NAME));
         }
@@ -67,7 +67,7 @@ public class Config {
         config.setFdPrefix(StringUtils.EMPTY);
         config.setColumnChk(true);
         config.setMybatisPlusChk(true);
-        config.setDateChk(false);
+        config.setLocalDateChk(false);
         config.setBuilderChk(false);
         config.setMapperSuffix(Constants.MAPPER_NAME);
         config.save();
@@ -138,12 +138,12 @@ public class Config {
     }
 
 
-    public boolean isDateChk() {
-        return dateChk;
+    public boolean isLocalDateChk() {
+        return localDateChk;
     }
 
-    public void setDateChk(boolean dateChk) {
-        this.dateChk = dateChk;
+    public void setLocalDateChk(boolean localDateChk) {
+        this.localDateChk = localDateChk;
     }
 
     public boolean isBuilderChk() {

@@ -58,7 +58,7 @@
         <properties/>
         <border type="none"/>
         <children>
-          <grid id="61116" layout-manager="GridLayoutManager" row-count="5" column-count="8" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+          <grid id="61116" layout-manager="GridLayoutManager" row-count="5" column-count="7" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
             <margin top="0" left="0" bottom="0" right="0"/>
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="1" fill="1" indent="0" use-parent-layout="true"/>
@@ -109,7 +109,7 @@
               </component>
               <component id="39b6a" class="javax.swing.JRadioButton" binding="tbPrefixDelCustomRbtn">
                 <constraints>
-                  <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="1" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="删除指定的前缀"/>
@@ -117,7 +117,7 @@
               </component>
               <component id="5ed27" class="javax.swing.JRadioButton" binding="lombokRbtn">
                 <constraints>
-                  <grid row="0" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="0" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <selected value="true"/>
@@ -126,7 +126,7 @@
               </component>
               <component id="89913" class="javax.swing.JTextField" binding="tbPrefix">
                 <constraints>
-                  <grid row="1" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="1" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
@@ -159,7 +159,7 @@
               </component>
               <component id="3d3db" class="javax.swing.JRadioButton" binding="fdPrefixDelCustomRbtn">
                 <constraints>
-                  <grid row="2" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="删除指定的前缀"/>
@@ -167,7 +167,7 @@
               </component>
               <component id="ec7ce" class="javax.swing.JTextField" binding="fdPrefix">
                 <constraints>
-                  <grid row="2" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="2" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
@@ -186,13 +186,13 @@
                   <grid row="3" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="支持mybatis-plus"/>
+                  <text value="支持mybatis-plus ?"/>
                   <toolTipText value="service类会继承mybatis-plus的默认实现"/>
                 </properties>
               </component>
               <component id="da8d5" class="javax.swing.JLabel">
                 <constraints>
-                  <grid row="3" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
+                  <grid row="3" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
                 </constraints>
                 <properties>
                   <text value="mapper文件后缀"/>
@@ -200,22 +200,12 @@
               </component>
               <component id="c5d12" class="javax.swing.JTextField" binding="mapperSuffix">
                 <constraints>
-                  <grid row="3" column="7" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                  <grid row="3" column="6" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
                     <preferred-size width="150" height="-1"/>
                   </grid>
                 </constraints>
                 <properties>
                   <text value="Mapper"/>
-                </properties>
-              </component>
-              <component id="4fae1" class="javax.swing.JLabel">
-                <constraints>
-                  <grid row="3" column="5" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-                </constraints>
-                <properties>
-                  <background color="-14868737"/>
-                  <text value="?"/>
-                  <toolTipText value="service类会继承mybatis-plus的默认实现"/>
                 </properties>
               </component>
               <component id="a7a5c" class="javax.swing.JLabel">
@@ -234,12 +224,13 @@
                   <text value="实体参数"/>
                 </properties>
               </component>
-              <component id="256ed" class="javax.swing.JCheckBox" binding="dateChkBtn">
+              <component id="256ed" class="javax.swing.JCheckBox" binding="localDateChkBtn">
                 <constraints>
                   <grid row="4" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="LocalDateTime"/>
+                  <text value="LocalDateTime ?"/>
+                  <toolTipText value="使用LocalDateTime替换Date类型"/>
                 </properties>
               </component>
               <component id="60f9f" class="javax.swing.JCheckBox" binding="builderChkBtn">
@@ -247,7 +238,8 @@
                   <grid row="4" column="4" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="@Builder"/>
+                  <text value="@Builder ?"/>
+                  <toolTipText value="支持Lombok链式生成类"/>
                 </properties>
               </component>
             </children>
