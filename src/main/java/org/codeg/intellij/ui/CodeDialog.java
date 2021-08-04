@@ -6,7 +6,6 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.ui.MessageType;
 import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.http.util.TextUtils;
 import org.codeg.intellij.builder.*;
 import org.codeg.intellij.config.Cache;
