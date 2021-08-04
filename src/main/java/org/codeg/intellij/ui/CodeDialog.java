@@ -149,7 +149,7 @@ public class CodeDialog extends JDialog {
     }
 
     private void setComboBoxItems(JComboBox<String> comboBox, Set<String> items) {
-        if (CollectionUtils.isNotEmpty(items)) {
+        if (items != null && !items.isEmpty()) {
             for (String item : items) {
                 comboBox.addItem(item);
             }
