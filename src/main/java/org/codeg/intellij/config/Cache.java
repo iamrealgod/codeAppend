@@ -57,8 +57,8 @@ public class Cache {
             cache.setMapperPath(PropertiesComponent.getInstance().getValue("mapperPath", StringUtils.EMPTY));
 
 
-            cache.addMapperPathItem(PropertiesComponent.getInstance().getValue("mapperPathItem", StringUtils.EMPTY).split(","));
             cache.addEntityPathItem(PropertiesComponent.getInstance().getValue("entityPathItem", StringUtils.EMPTY).split(","));
+            cache.addMapperPathItem(PropertiesComponent.getInstance().getValue("mapperPathItem", StringUtils.EMPTY).split(","));
             cache.addDaoPathItem(PropertiesComponent.getInstance().getValue("daoPathItem", StringUtils.EMPTY).split(","));
             cache.addServicePathItem(PropertiesComponent.getInstance().getValue("servicePathItem", StringUtils.EMPTY).split(","));
         }
@@ -181,5 +181,24 @@ public class Cache {
             servicePathItem = new HashSet<>();
         }
         servicePathItem.addAll(Arrays.stream(items).filter(StringUtils::isNotBlank).collect(Collectors.toSet()));
+    }
+
+    public void remoteItem(String item, String comboBoxPosition) {
+        try {
+            if (comboBoxPosition.equals("mapperPathItem")) {
+                mapperPathItem.remove(item);
+            }
+            if (comboBoxPosition.equals("entityPathItem")) {
+                entityPathItem.remove(item);
+            }
+            if (comboBoxPosition.equals("daoPathItem")) {
+                daoPathItem.remove(item);
+            }
+            if (comboBoxPosition.equals("servicePathItem")) {
+                servicePathItem.remove(item);
+            }
+        } catch (Exception e) {
+
+        }
     }
 }

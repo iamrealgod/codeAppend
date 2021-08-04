@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionListener;
+import java.util.Objects;
 
 public class TipsComboBoxUI extends DarculaComboBoxUI {
 
@@ -20,6 +21,9 @@ public class TipsComboBoxUI extends DarculaComboBoxUI {
                 Component curCom;
 
                 public void mouseMoved(MouseEvent e) {
+                    if (Objects.isNull(listBox.getSelectedValue())) {
+                        return;
+                    }
                     curCom = listBox.getCellRenderer()
                             .getListCellRendererComponent(listBox, listBox.getSelectedValue(), listBox.getSelectedIndex(),
                                     true, true);

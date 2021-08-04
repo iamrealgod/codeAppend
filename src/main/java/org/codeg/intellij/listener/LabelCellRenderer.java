@@ -1,6 +1,7 @@
 package org.codeg.intellij.listener;
 
 import com.intellij.ui.JBColor;
+import org.codeg.intellij.config.Cache;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,6 +12,7 @@ public class LabelCellRenderer<T> extends JLabel implements ListCellRenderer<T>,
 
     private static final long serialVersionUID = 1L;
     private JComboBox<T> comboBox;
+    private String comboBoxPosition;
 
     private int selectedIndex = -1;
 
@@ -19,9 +21,10 @@ public class LabelCellRenderer<T> extends JLabel implements ListCellRenderer<T>,
      *
      * @param comboBox 当前渲染器所属的JComboBox
      */
-    public LabelCellRenderer(final JComboBox<T> comboBox) {
+    public LabelCellRenderer(final JComboBox<T> comboBox, String comboBoxPosition) {
         setOpaque(true);
         this.comboBox = comboBox;
+        this.comboBoxPosition = comboBoxPosition;
         this.comboBox.getEditor().getEditorComponent().addKeyListener(this);
     }
 
@@ -52,18 +55,22 @@ public class LabelCellRenderer<T> extends JLabel implements ListCellRenderer<T>,
     @Override
     public void keyPressed(KeyEvent e) {
 
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
         int keyCode = e.getKeyCode();
 
         if (keyCode == 38) {// 按向上的方向键则索引减一
             int index = this.comboBox.getSelectedIndex();
-            if (index == 0) {
+            if (index <= 0) {
                 return;
             }
             index--;
             this.comboBox.setSelectedIndex(index);
         } else if (keyCode == 40) {// 按向下的方向键则索引加一
             int index = this.comboBox.getSelectedIndex();
-            if (index == this.comboBox.getItemCount() - 1) {
+            if (index >= this.comboBox.getItemCount() - 1) {
                 return;
             }
             index++;
@@ -79,7 +86,12 @@ public class LabelCellRenderer<T> extends JLabel implements ListCellRenderer<T>,
 
                 // 如果是按Delete键则移除当前选中的Item
                 if (this.selectedIndex >= 0 && this.selectedIndex < this.comboBox.getItemCount()) {
+                    String selectedItem = (String) this.comboBox.getSelectedItem();
+                    Cache.getInstant().remoteItem(selectedItem, comboBoxPosition);
+                    Cache.getInstant().save();
+
                     this.comboBox.removeItemAt(this.selectedIndex);
+
                     textField.setText(text);
                     textField.setCaretPosition(position);
                 }
@@ -87,12 +99,6 @@ public class LabelCellRenderer<T> extends JLabel implements ListCellRenderer<T>,
                 e.setKeyCode(-1);
             }
         }
-
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-
     }
 
     @Override

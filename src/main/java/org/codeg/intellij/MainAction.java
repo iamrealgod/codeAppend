@@ -19,7 +19,7 @@ public class MainAction extends AnAction implements DumbAware{
         Project project = e.getData(PlatformDataKeys.PROJECT);
         CodeDialog dialog = new CodeDialog(project);
         dialog.setProject(project);
-        dialog.setSize(620, 620);
+        dialog.setSize(630, 630);
         dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }

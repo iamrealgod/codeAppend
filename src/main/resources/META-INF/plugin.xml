@@ -1,28 +1,22 @@
 <idea-plugin>
   <id>codeAppend</id>
   <name>codeAppend</name>
-  <version>2.0.0</version>
+  <version>2.0.1</version>
   <vendor email="IamRealGod@163.com">IamRealGod</vendor>
 
   <description><![CDATA[
       <br>
-      追加方式(append):输入建表sql语句, 如果字段列不存在,会追加字段到 [entity\mapper] 文件中.<br>
-      覆盖方式(Override):输入建表sql语句, 输出 [entity\mapper\dao\service] java文件到对应目录.<br>
+      追加方式(append):输入建表sql语句, 如果字段列不存在,会追加字段到 [entity\mapper] 文件中.<br><br>
+      覆盖方式(Override):输入建表sql语句, 输出 [entity\mapper\dao\service] java文件到对应目录.<br><br>
       File -> Code Append（ctrl+alt+C）.<br>
       <a href='https://github.com/laoziyaonitian/codeAppend'>openSource and Docs</a>
     ]]></description>
 
   <change-notes><![CDATA[
   <p>
-    v2.0.0
+    v2.0.1
     <ul>
-      <li>1、更改路径输入框为下拉框，并且缓存历史记录</li>
-      <li>2、增加二次弹窗确认路径操作，防止不小心点错的问题</li>
-      <li>3、增加配置支持 LocalDateTime</li>
-      <li>4、增加配置Lombok @Builder链式注解</li>
-      <li>5、界面说明全面改成中文</li>
-      <li>6、增加选项说明</li>
-      <li>7、增加快捷键 ctrl+alt+C</li>
+      <li>增加历史路径记录删除功能</li>
     </ul>
   </p>
     ]]>

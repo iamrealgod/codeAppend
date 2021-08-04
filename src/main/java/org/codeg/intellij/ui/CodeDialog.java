@@ -8,10 +8,7 @@ import com.intellij.openapi.ui.Messages;
 import com.intellij.openapi.vfs.VirtualFile;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.http.util.TextUtils;
-import org.codeg.intellij.builder.DaoBuilder;
-import org.codeg.intellij.builder.EntityBuilder;
-import org.codeg.intellij.builder.MapperBuilder;
-import org.codeg.intellij.builder.ServiceBuilder;
+import org.codeg.intellij.builder.*;
 import org.codeg.intellij.config.Cache;
 import org.codeg.intellij.config.Config;
 import org.codeg.intellij.entity.ClassEntity;
@@ -22,16 +19,13 @@ import org.codeg.intellij.util.DBUtils;
 import org.codeg.intellij.util.RegexUtils;
 
 import javax.swing.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.event.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
 /**
- *
  * @author liufei
  * @date 2018/12/24 17:11
  */
@@ -54,9 +48,9 @@ public class CodeDialog extends JDialog {
     private JComboBox<String> entityDir;
     private JComboBox<String> serviceDir;
     private JComboBox<String> daoDir;
-    private JLabel entityLabel;
     private JLabel mapperLabel;
-    private JLabel appendType;
+    private JButton sqlExampleBtn;
+    private JLabel entityLabel;
     private Project project;
 
     public CodeDialog(Project project) {
@@ -65,9 +59,9 @@ public class CodeDialog extends JDialog {
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
         try {
+            initUI();
             initData();
             initListener();
-            initUI();
         } catch (Exception e) {
             reset();
         }
@@ -117,10 +111,12 @@ public class CodeDialog extends JDialog {
         buttonSetting.addActionListener(e -> openSettingDialog());
 
         // 方向键控制选择选项，以及delete建删除
-        entityDir.setRenderer(new LabelCellRenderer<>(mapperDir));
-        mapperDir.setRenderer(new LabelCellRenderer<>(mapperDir));
-        daoDir.setRenderer(new LabelCellRenderer<>(mapperDir));
-        serviceDir.setRenderer(new LabelCellRenderer<>(mapperDir));
+        entityDir.setRenderer(new LabelCellRenderer<>(entityDir, "entityPathItem"));
+        mapperDir.setRenderer(new LabelCellRenderer<>(mapperDir, "mapperPathItem"));
+        daoDir.setRenderer(new LabelCellRenderer<>(daoDir,"daoPathItem"));
+        serviceDir.setRenderer(new LabelCellRenderer<>(serviceDir, "servicePathItem"));
+
+        sqlExampleBtn.addActionListener(e -> editTP.setText(ExampleBuilder.DEMO_SQL));
 
         // call onCancel() when cross is clicked
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -232,7 +228,7 @@ public class CodeDialog extends JDialog {
             }
             dispose();
         } catch (Exception e) {
-            Messages.showErrorDialog(project,"未知错误! 可能是路径权限或者路径不正确,已清除缓存路径,请检查重试.","未知错误");
+            Messages.showErrorDialog(project, "未知错误! 可能是路径权限或者路径不正确,已清除缓存路径,请检查重试.", "未知错误");
             reset();
         }
     }
