@@ -68,13 +68,13 @@ public class CodeDialog extends JDialog {
     }
 
     private void initUI() {
-        entityDir.setUI(new TipsComboBoxUI());
+        entityDir.setUI(new TipsComboBoxUI(entityDir));
         ((TipsComboBoxUI) entityDir.getUI()).tips();
-        mapperDir.setUI(new TipsComboBoxUI());
+        mapperDir.setUI(new TipsComboBoxUI(mapperDir));
         ((TipsComboBoxUI) mapperDir.getUI()).tips();
-        daoDir.setUI(new TipsComboBoxUI());
+        daoDir.setUI(new TipsComboBoxUI(daoDir));
         ((TipsComboBoxUI) daoDir.getUI()).tips();
-        serviceDir.setUI(new TipsComboBoxUI());
+        serviceDir.setUI(new TipsComboBoxUI(serviceDir));
         ((TipsComboBoxUI) serviceDir.getUI()).tips();
     }
 

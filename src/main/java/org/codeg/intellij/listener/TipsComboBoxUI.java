@@ -10,8 +10,8 @@ import java.util.Objects;
 
 public class TipsComboBoxUI extends DarculaComboBoxUI {
 
-    public TipsComboBoxUI() {
-        super();
+    public TipsComboBoxUI(JComboBox comboBox) {
+        super(comboBox);
     }
 
     public void tips() {
